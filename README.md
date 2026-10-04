@@ -583,11 +583,11 @@ collection centres and humanitarian coordinators: no licences, no box limits and
 no usage fees.
 
 **Ownership.** Araguaney is a project by **Antony Delgado Casanova**, who holds
-copyright over the code, the name "Araguaney" and the araguaney.org and araguaney.lat domains. No
+copyright over the code, the name "Araguaney" and the araguaney.org domain. No
 legal entity is associated with the project.
 
 **The trademark is not licensed with the code.** The name "Araguaney", the logo
-and the araguaney.org and araguaney.lat domains identify the official instance and its network of
+and the araguaney.org domain identify the official instance and its network of
 centres. A fork must operate under a different name and domain, without
 presenting itself as the official instance — especially during an emergency,
 when confusion costs the most.
