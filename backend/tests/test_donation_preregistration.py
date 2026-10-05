@@ -275,7 +275,7 @@ def test_hash_de_token_es_estable_y_no_reversible():
 
 def test_el_qr_de_donacion_apunta_a_la_ficha_publica():
     from app.utils.qr import donation_qr_png
-    png = donation_qr_png("DN-ABC123", "https://araguaney.lat")
+    png = donation_qr_png("DN-ABC123", "https://araguaney.org")
     assert png[:8] == b"\x89PNG\r\n\x1a\n"
 
 

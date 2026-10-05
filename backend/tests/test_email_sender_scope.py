@@ -14,9 +14,9 @@ class TestSenderDomain:
     @pytest.mark.parametrize(
         "value,expected",
         [
-            ("Araguaney <noreply@araguaney.lat>", "araguaney.lat"),
-            ("noreply@araguaney.lat", "araguaney.lat"),
-            ("  NoReply@Araguaney.LAT  ", "araguaney.lat"),
+            ("Araguaney <noreply@araguaney.org>", "araguaney.org"),
+            ("noreply@araguaney.org", "araguaney.org"),
+            ("  NoReply@Araguaney.ORG  ", "araguaney.org"),
             ("Otro Producto <noreply@otroproducto.example>", "otroproducto.example"),
         ],
     )
@@ -31,15 +31,15 @@ class TestSenderDomain:
 class TestOwnedDomains:
     def test_falls_back_to_mail_from(self, monkeypatch):
         monkeypatch.setattr("app.config.settings.email_owned_domains", "")
-        monkeypatch.setattr("app.config.settings.mail_from", "noreply@araguaney.lat")
-        assert owned_domains() == {"araguaney.lat"}
+        monkeypatch.setattr("app.config.settings.mail_from", "noreply@araguaney.org")
+        assert owned_domains() == {"araguaney.org"}
 
     def test_explicit_list_wins_and_is_normalized(self, monkeypatch):
         monkeypatch.setattr(
-            "app.config.settings.email_owned_domains", " Araguaney.lat , mail.araguaney.lat ,"
+            "app.config.settings.email_owned_domains", " Araguaney.org , mail.araguaney.org ,"
         )
         monkeypatch.setattr("app.config.settings.mail_from", "noreply@otro.test")
-        assert owned_domains() == {"araguaney.lat", "mail.araguaney.lat"}
+        assert owned_domains() == {"araguaney.org", "mail.araguaney.org"}
 
     def test_unknown_sender_yields_empty(self, monkeypatch):
         monkeypatch.setattr("app.config.settings.email_owned_domains", "")
@@ -51,19 +51,19 @@ class TestIsOurs:
     @pytest.fixture(autouse=True)
     def _our_domain(self, monkeypatch):
         monkeypatch.setattr("app.config.settings.email_owned_domains", "")
-        monkeypatch.setattr("app.config.settings.mail_from", "noreply@araguaney.lat")
+        monkeypatch.setattr("app.config.settings.mail_from", "noreply@araguaney.org")
 
     def test_keeps_our_own_event(self):
-        assert is_ours({"from": "Araguaney <noreply@araguaney.lat>"}) is True
+        assert is_ours({"from": "Araguaney <noreply@araguaney.org>"}) is True
 
     def test_keeps_a_sending_subdomain(self):
-        assert is_ours({"from": "Araguaney <noreply@mail.araguaney.lat>"}) is True
+        assert is_ours({"from": "Araguaney <noreply@mail.araguaney.org>"}) is True
 
     def test_drops_another_product_on_the_same_account(self):
         assert is_ours({"from": "Otro Producto <noreply@otroproducto.example>"}) is False
 
     def test_does_not_match_a_domain_that_merely_ends_the_same(self):
-        assert is_ours({"from": "no@notaraguaney.lat"}) is False
+        assert is_ours({"from": "no@notaraguaney.org"}) is False
 
     def test_missing_sender_is_kept(self):
         """Falla abierta: perder un rebote propio es peor que guardar uno ajeno."""

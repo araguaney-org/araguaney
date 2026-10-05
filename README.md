@@ -1,8 +1,8 @@
 # Araguaney
 
-[![Backend tests](https://img.shields.io/github/actions/workflow/status/araguaney-lat/araguaney/backend-tests.yml?branch=main&label=backend%20tests)](https://github.com/araguaney-lat/araguaney/actions/workflows/backend-tests.yml)
-[![Frontend tests](https://img.shields.io/github/actions/workflow/status/araguaney-lat/araguaney/frontend-tests.yml?branch=main&label=frontend%20tests)](https://github.com/araguaney-lat/araguaney/actions/workflows/frontend-tests.yml)
-[![Security scan](https://img.shields.io/github/actions/workflow/status/araguaney-lat/araguaney/security-scan.yml?branch=main&label=security%20scan)](https://github.com/araguaney-lat/araguaney/actions/workflows/security-scan.yml)
+[![Backend tests](https://img.shields.io/github/actions/workflow/status/araguaney-org/araguaney/backend-tests.yml?branch=main&label=backend%20tests)](https://github.com/araguaney-org/araguaney/actions/workflows/backend-tests.yml)
+[![Frontend tests](https://img.shields.io/github/actions/workflow/status/araguaney-org/araguaney/frontend-tests.yml?branch=main&label=frontend%20tests)](https://github.com/araguaney-org/araguaney/actions/workflows/frontend-tests.yml)
+[![Security scan](https://img.shields.io/github/actions/workflow/status/araguaney-org/araguaney/security-scan.yml?branch=main&label=security%20scan)](https://github.com/araguaney-org/araguaney/actions/workflows/security-scan.yml)
 [![Licence: AGPL-3.0](https://img.shields.io/badge/licence-AGPL--3.0-blue)](LICENSE)
 
 > **A common standard for coordinating collection centres and humanitarian aid logistics.**
@@ -583,11 +583,11 @@ collection centres and humanitarian coordinators: no licences, no box limits and
 no usage fees.
 
 **Ownership.** Araguaney is a project by **Antony Delgado Casanova**, who holds
-copyright over the code, the name "Araguaney" and the araguaney.org and araguaney.lat domains. No
+copyright over the code, the name "Araguaney" and the araguaney.org domain. No
 legal entity is associated with the project.
 
 **The trademark is not licensed with the code.** The name "Araguaney", the logo
-and the araguaney.org and araguaney.lat domains identify the official instance and its network of
+and the araguaney.org domain identify the official instance and its network of
 centres. A fork must operate under a different name and domain, without
 presenting itself as the official instance — especially during an emergency,
 when confusion costs the most.

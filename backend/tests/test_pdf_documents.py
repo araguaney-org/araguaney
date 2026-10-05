@@ -165,7 +165,7 @@ class TestEtiquetasBilingues:
         return LabelData(
             code="BX-I18N01", display_name="Ibuprofeno 500 mg", category="MEDICINE",
             batch="L001", expiry_date=date(2027, 3, 4), quantity=24, unit="caja",
-            center_name="Centro Coyoacán", base_url="https://araguaney.lat",
+            center_name="Centro Coyoacán", base_url="https://araguaney.org",
         )
 
     def test_las_palabras_del_formulario_cambian_de_idioma(self):

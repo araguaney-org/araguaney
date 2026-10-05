@@ -44,12 +44,12 @@ class TestRecordEvent:
     @pytest.fixture(autouse=True)
     def _our_domain(self, monkeypatch):
         monkeypatch.setattr("app.config.settings.email_owned_domains", "")
-        monkeypatch.setattr("app.config.settings.mail_from", "noreply@araguaney.lat")
+        monkeypatch.setattr("app.config.settings.mail_from", "noreply@araguaney.org")
 
     def _data(self, **kw):
         base = dict(
             email_id="re_123",
-            **{"from": "Araguaney <noreply@araguaney.lat>"},
+            **{"from": "Araguaney <noreply@araguaney.org>"},
             to=["x@mail.com"],
             tags=[{"name": "email_type", "value": "invitation"}],
             bounce={"message": "mailbox full"},
