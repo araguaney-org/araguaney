@@ -195,7 +195,7 @@ export function howToSchema({
   }
 }
 
-interface Faq {
+export interface Faq {
   q: string
   a: string
 }

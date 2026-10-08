@@ -79,9 +79,9 @@ const CONTENT: Record<Locale, Content> = {
     crumbGuides: "Guías",
   },
   en: {
-    metaTitle: "Inventory system for disaster relief in an emergency",
+    metaTitle: "Nonprofit inventory management for disaster relief",
     description:
-      "How to build an aid inventory for disaster victims that actually works: item-level intake, expiry control, and real-time visibility into what's missing.",
+      "How to run nonprofit inventory management for disaster relief that actually works: item-level intake, expiry control, and real-time visibility into what's missing.",
     ogEyebrow: "Guide",
     eyebrow: "Guide",
     h1: "Inventory system for disaster relief",
