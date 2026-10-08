@@ -58,8 +58,8 @@ const nextConfig: NextConfig = {
       // reales, y un 308 se queda cacheado en el navegador aunque después /p/
       // tenga su propia página.
       { source: "/p/:code", destination: "/qr/:code", permanent: false },
-      // El dominio anterior, por si la redirección de Vercel no alcanza la
-      // petición (ver src/lib/legacy-domains.ts).
+      // El dominio anterior, como segunda capa detrás de la redirección de
+      // dominio de Vercel (ver src/lib/legacy-domains.ts).
       ...legacyDomainRedirects(),
     ]
   },

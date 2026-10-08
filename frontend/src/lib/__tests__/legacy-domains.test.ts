@@ -1,10 +1,9 @@
 import { describe, expect, it } from "vitest"
 import { LEGACY_HOST_PATTERN, legacyDomainRedirects } from "@/lib/legacy-domains"
 
-// La redirección de dominio de Vercel no le llega a todas las peticiones: la
-// prueba en vivo de Search Console recibió 200 en www.araguaney.lat, y por eso
-// el aviso de cambio de dirección fallaba. La aplicación repite la redirección
-// por su cuenta, así que ninguna petición al dominio viejo recibe contenido.
+// Segunda capa detrás de la redirección de dominio de Vercel: si una petición
+// con host del dominio viejo llega a la aplicación, recibe un 301 y nunca
+// contenido. Ver el porqué en src/lib/legacy-domains.ts.
 
 const hostRegex = new RegExp(`^${LEGACY_HOST_PATTERN}$`)
 
