@@ -45,7 +45,7 @@ interface Content {
 
 const CONTENT: Record<Locale, Content> = {
   es: {
-    metaTitle: "Software gratis para gestionar donaciones en una ONG",
+    metaTitle: "Software para ONG: gestionar donaciones gratis",
     description:
       "Qué buscar en un software para gestionar donaciones en especie sin costo: registro por ítem, trazabilidad, manifiesto y agregación entre centros.",
     ogEyebrow: "Guía",
@@ -80,7 +80,7 @@ const CONTENT: Record<Locale, Content> = {
     crumbGuides: "Guías",
   },
   en: {
-    metaTitle: "Free software to manage in-kind donations at an NGO",
+    metaTitle: "Free donation management software for NGOs",
     description:
       "What to look for in free software to manage in-kind donations: item-level intake, traceability, manifests, and aggregation across centers.",
     ogEyebrow: "Guide",
