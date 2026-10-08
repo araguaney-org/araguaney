@@ -5,7 +5,7 @@ import HomeNav from "@/components/HomeNav"
 import HomeFooter from "@/components/HomeFooter"
 import { CtaLink } from "@/components/CtaLink"
 import { getDictionary } from "@/lib/i18n"
-import { alternates } from "@/lib/seo"
+import { alternates, ogImageUrl } from "@/lib/seo"
 import { type Locale, localizedPath } from "@/lib/routes"
 import { JsonLd } from "@/components/JsonLd"
 import { FaqSection } from "@/components/FaqSection"
@@ -26,17 +26,20 @@ export async function generateMetadata({
   const { lang } = await params
   const dict = await getDictionary(lang)
   const { home_title, home_description } = dict.seo
+  // La tarjeta de app/opengraph-image.tsx no llega a este segmento [lang]: sin
+  // imagen propia, la home se compartía sin vista previa.
+  const ogImage = ogImageUrl(home_title)
 
   return {
     title: home_title,
     description: home_description,
     alternates: alternates("", lang),
-    // Images omitted so the file-convention card (app/opengraph-image.tsx) is used.
-    openGraph: { title: home_title, description: home_description },
+    openGraph: { title: home_title, description: home_description, images: [ogImage] },
     twitter: {
       card: "summary_large_image",
       title: home_title,
       description: home_description,
+      images: [ogImage],
     },
   }
 }

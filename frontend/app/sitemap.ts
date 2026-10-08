@@ -23,12 +23,14 @@ import type { PublicCampaignListItem } from "@/types"
 // network egress applies and this behaves like any other dynamic route.
 export const dynamic = "force-dynamic"
 
+// No `lastModified`: the only date available was the request time, so every
+// page claimed to have changed on every fetch. Google ignores a lastmod that is
+// never accurate, and an absent one is better than a wrong one.
+//
 // QR fichas are not listed here: there is no public listing endpoint to
 // enumerate box/pallet codes (backend/app/routers/dashboard.py's public/qr/{code}
 // route is lookup-by-code only, by design — codes aren't meant to be enumerable).
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date()
-
   // Still keep a fetch-level timeout as defense-in-depth for the deployed
   // runtime — a slow/unreachable backend at request time should degrade to
   // the static-only sitemap instead of hanging the response.
@@ -45,84 +47,72 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     {
       url: SITE_URL,
-      lastModified: now,
       changeFrequency: "weekly",
       priority: 1,
       alternates: { languages: langAlternates("") },
     },
     {
       url: absoluteUrl(localizedPath("centro-de-acopio", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9,
       alternates: { languages: langAlternates("centro-de-acopio") },
     },
     {
       url: absoluteUrl(localizedPath("registrar-centro", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9,
       alternates: { languages: langAlternates("registrar-centro") },
     },
     {
       url: absoluteUrl(localizedPath("como-funciona", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
       alternates: { languages: langAlternates("como-funciona") },
     },
     {
       url: absoluteUrl(localizedPath("nosotros", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.6,
       alternates: { languages: langAlternates("nosotros") },
     },
     {
       url: absoluteUrl(localizedPath("centro-de-acopio-mexico", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.7,
       alternates: { languages: langAlternates("centro-de-acopio-mexico") },
     },
     {
       url: absoluteUrl(localizedPath("preguntas-frecuentes", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.6,
       alternates: { languages: langAlternates("preguntas-frecuentes") },
     },
     {
       url: absoluteUrl(localizedPath("novedades", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.5,
       alternates: { languages: langAlternates("novedades") },
     },
     {
       url: absoluteUrl(localizedPath("ayuda-humanitaria", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9,
       alternates: { languages: langAlternates("ayuda-humanitaria") },
     },
     {
       url: absoluteUrl(localizedPath("alternativa-a-excel-para-donaciones", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.85,
       alternates: { languages: langAlternates("alternativa-a-excel-para-donaciones") },
     },
     {
       url: absoluteUrl(localizedPath("necesidades", "es")),
-      lastModified: now,
       changeFrequency: "hourly",
       priority: 0.8,
       alternates: { languages: langAlternates("necesidades") },
     },
     {
       url: absoluteUrl(localizedPath("guias", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.7,
       alternates: { languages: langAlternates("guias") },
@@ -138,14 +128,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ] as const
     ).map((key) => ({
       url: absoluteUrl(localizedPath(key, "es")),
-      lastModified: now,
       changeFrequency: "yearly" as const,
       priority: 0.6,
       alternates: { languages: langAlternates(key) },
     })),
     {
       url: absoluteUrl(localizedPath("glosario", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.5,
       alternates: { languages: langAlternates("glosario") },
@@ -154,8 +142,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const key = `necesidades/${c.slug}` as RouteKey
       return {
         url: absoluteUrl(localizedPath(key, "es")),
-        lastModified: now,
-        changeFrequency: "daily" as const,
+          changeFrequency: "daily" as const,
         priority: 0.7,
         alternates: { languages: langAlternates(key) },
       }
@@ -164,36 +151,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const key = `escenarios/${s.slug}` as RouteKey
       return {
         url: absoluteUrl(localizedPath(key, "es")),
-        lastModified: now,
-        changeFrequency: "monthly" as const,
+          changeFrequency: "monthly" as const,
         priority: 0.7,
         alternates: { languages: langAlternates(key) },
       }
     }),
     {
       url: absoluteUrl(localizedPath("contacto", "es")),
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.3,
       alternates: { languages: langAlternates("contacto") },
     },
     {
       url: absoluteUrl(localizedPath("aviso-de-privacidad", "es")),
-      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.2,
       alternates: { languages: langAlternates("aviso-de-privacidad") },
     },
     {
       url: absoluteUrl(localizedPath("terminos", "es")),
-      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.2,
       alternates: { languages: langAlternates("terminos") },
     },
     ...campaigns.map((c) => ({
       url: `${SITE_URL}/eventos/${c.slug}`,
-      lastModified: now,
       changeFrequency: "daily" as const,
       priority: 0.85,
     })),
