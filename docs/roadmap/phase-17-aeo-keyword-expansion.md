@@ -156,6 +156,23 @@ task 22) contra la propiedad `araguaney.org`.
 | 20 | Analítica de Bing | Cobertura e impresiones en Bing Webmaster Tools (complementa GSC). Depende de la task 1. | 🟢 | 🟡 Preparada — qué extraer de Bing WMT cada mes (índice n/33, impresiones, clics, top queries vs GSC) definido en [`docs/seo/aeo-monitoring.md`](../seo/aeo-monitoring.md), Parte 2. La revisión mensual del dashboard es manual. |
 | 21 | KPIs de AEO | Definir métricas más allá de la posición en Google: share-of-voice en respuestas de IA, menciones de marca y citas. Revisar con las tasks 19–20. | 🟢 | ✅ Done — KPIs definidos con fórmula y línea base en [`docs/seo/aeo-monitoring.md`](../seo/aeo-monitoring.md), Parte 3: share-of-voice (métrica cabecera), tasa de cita por motor, distribución por página citada, exactitud de la respuesta, cobertura de índice en Bing y menciones de marca. |
 
+
+### Grupo F — Expansión con datos de búsqueda (2026-10-08)
+
+Autocompletado de Google en ES (MX, CO, AR, CL, PE, ES), EN (US, PH), PT (BR) y FR. Dos hallazgos
+pesan más que el resto. Uno: el patrón **"qué donar / dónde llevar ayuda para {lugar}"** se repite
+en cualquier país y para cualquier desastre (Venezuela, Colombia, Perú, Nepal, Filipinas, Brasil),
+así que se resuelve con la ficha del evento y no con páginas por país: la aplicación es global y
+no está atada al evento que le dio origen. Dos: la intención **plantilla** ("control de donaciones
+en excel", "donation tracking spreadsheet template") no tenía respuesta. Quedan fuera a propósito
+las búsquedas fiscales ("donaciones en especie deducibles"): Araguaney no opina sobre impuestos.
+
+| # | Tarea | Descripción | Prioridad | Estado |
+|---|-------|-------------|-----------|--------|
+| 22 | Ficha de evento orientada al país destino | `/eventos/[slug]` titula y describe con el país destino ("{campaña}: qué donar a {país}"), para cualquier código ISO, y suma una sección visible "¿Qué donar a {país}?" y una tarjeta para compartir propia. | 🟠 | ✅ Done — `src/lib/event-seo.ts` (nombre del país con `Intl.DisplayNames`, sin lista fija de países) y sus pruebas, que fijan países de varias regiones. Posiciona en cuanto exista una campaña pública: hoy no hay ninguna. |
+| 23 | Plantilla gratuita para Excel | Descarga CSV con las columnas del estándar (una fila por caja homogénea: producto, INN, lote, caducidad, cantidad, peso), en español e inglés, ofrecida en `/alternativa-a-excel-para-donaciones` donde la página admite que para un acopio chico basta una hoja. | 🟡 | ✅ Done — `src/lib/donation-template.ts` + rutas estáticas `/plantilla-control-de-donaciones.csv` y `/donation-tracking-template.csv`. CSV con BOM para que Excel respete acentos; sin dependencia nueva. La aplicación no importa CSV, y la página no lo promete. |
+| 24 | Contenido por tipo de emergencia y títulos en inglés | Sección y FAQ (`FAQPage`) "qué donar después de un terremoto, una inundación o un huracán/tifón" en la guía de qué se puede donar. Títulos en inglés con los términos que se buscan: *nonprofit inventory management*, *donation tracking software*, *donation management software for nonprofits*, *disaster relief software*, *relief goods*. | 🟡 | ✅ Done — sin cambiar URLs. |
+| 25 | Evaluar portugués (pt-BR) y destino por región | Brasil busca "ponto de coleta de doações" y "o que doar para {ciudad}"; el sitio solo habla español e inglés. Además, muchas campañas apuntan a una región (Chocó, Junín, Juiz de Fora) y `destination_country` solo guarda el país. Decidir si conviene un tercer idioma y un campo de región destino, con datos de Search Console de `araguaney.org`. | 🟢 | ⬜ |
 ---
 
 ## Dependencias y notas

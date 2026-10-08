@@ -10,6 +10,7 @@ import { ogImageUrl, alternates } from "@/lib/seo"
 import { type Locale, localizedPath } from "@/lib/routes"
 import { JsonLd } from "@/components/JsonLd"
 import { faqSchema, breadcrumbSchema } from "@/lib/structured-data"
+import { TEMPLATE_FILENAME } from "@/lib/donation-template"
 
 const KEY = "alternativa-a-excel-para-donaciones"
 
@@ -46,6 +47,8 @@ interface Content {
   colAra: string
   rows: Row[]
   whenH2: string
+  templateP: string
+  templateCta: string
   whenP1: string
   whenP2: string
   faqTitle: string
@@ -103,6 +106,9 @@ const CONTENT: Record<Locale, Content> = {
       { cap: "Costo", sheet: "«Gratis», pero cuesta en errores", ara: "Gratis, sin límite de cajas" },
     ],
     whenH2: "¿Cuándo alcanza una hoja de cálculo?",
+    templateP:
+      "Si ese es tu caso, empieza con una plantilla de control de donaciones que ya sigue el estándar: una fila por caja, con producto, lote, caducidad, cantidad y peso. Abre en Excel, Google Sheets o LibreOffice.",
+    templateCta: "Descargar plantilla gratis (CSV para Excel)",
     whenP1:
       "Seamos honestos: si estás juntando unas cuantas cajas para un envío único y pequeño, una hoja de cálculo está perfectamente bien. No necesitas un sistema para eso, y montar uno sería sobre-ingeniería.",
     whenP2:
@@ -125,10 +131,10 @@ const CONTENT: Record<Locale, Content> = {
     crumbSelf: "Alternativa a Excel",
   },
   en: {
-    metaTitle: "A donation spreadsheet alternative",
-    ogTitle: "A donation spreadsheet alternative — Araguaney",
+    metaTitle: "Donation tracking software: a spreadsheet alternative",
+    ogTitle: "Donation tracking software: a spreadsheet alternative — Araguaney",
     description:
-      "Excel or WhatsApp for your aid center? Compare the spreadsheet with Araguaney: traceability, QR codes, a customs manifest, WHO validation and a national dashboard, free.",
+      "Tracking donations in Excel or WhatsApp? Compare the donation tracking spreadsheet with Araguaney: traceability, QR codes, a customs manifest, WHO validation and a national dashboard, free.",
     ogEyebrow: "Comparison",
     eyebrow: "Spreadsheet vs Araguaney",
     h1: "The spreadsheet alternative for managing in-kind donations",
@@ -164,6 +170,9 @@ const CONTENT: Record<Locale, Content> = {
       { cap: "Cost", sheet: "“Free”, but costs in errors", ara: "Free, no box limit" },
     ],
     whenH2: "When is a spreadsheet enough?",
+    templateP:
+      "If that's your case, start with a donation tracking spreadsheet template that already follows the standard: one row per box, with product, batch, expiry, quantity and weight. It opens in Excel, Google Sheets or LibreOffice.",
+    templateCta: "Download the free template (CSV for Excel)",
     whenP1:
       "Let's be honest: if you're gathering a few boxes for a single small shipment, a spreadsheet is perfectly fine. You don't need a system for that, and setting one up would be over-engineering.",
     whenP2:
@@ -331,6 +340,17 @@ export default async function SpreadsheetAlternativePage({
             <p className="text-[14.5px] md:text-[16px] mb-4" style={{ color: "#5C5347", lineHeight: 1.65 }}>
               {c.whenP1}
             </p>
+            <p className="text-[14.5px] md:text-[16px] mb-3" style={{ color: "#5C5347", lineHeight: 1.65 }}>
+              {c.templateP}
+            </p>
+            <a
+              href={`/${TEMPLATE_FILENAME[locale]}`}
+              download
+              className="inline-flex items-center justify-center px-5 py-2.5 mb-6"
+              style={{ border: "1.5px solid #E6D4A6", color: "#2B2723", fontWeight: 600, fontSize: 14, borderRadius: 99 }}
+            >
+              {c.templateCta}
+            </a>
             <p className="text-[14.5px] md:text-[16px]" style={{ color: "#5C5347", lineHeight: 1.65 }}>
               {c.whenP2}
             </p>

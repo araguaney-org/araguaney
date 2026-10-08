@@ -8,7 +8,8 @@ import { CONTENT_DATES, formatContentDate, updatedLabel, authorByline } from "@/
 import { type Locale, localizedPath } from "@/lib/routes"
 import { JsonLd } from "@/components/JsonLd"
 import { Breadcrumbs } from "@/components/Breadcrumbs"
-import { articleSchema, breadcrumbSchema } from "@/lib/structured-data"
+import { FaqSection } from "@/components/FaqSection"
+import { articleSchema, breadcrumbSchema, faqSchema, type Faq } from "@/lib/structured-data"
 
 const KEY = "guias/que-se-puede-donar"
 
@@ -33,6 +34,11 @@ interface Content {
   foodP: string
   noDonarH2: string
   noDonar: string[]
+  emergencyH2: string
+  emergencyP: string
+  emergency: Categoria[]
+  faqTitle: string
+  faq: Faq[]
   ctaLead: string
   ctaInventory: string
   ctaGuide: string
@@ -45,7 +51,7 @@ const CONTENT: Record<Locale, Content> = {
     metaTitle: "Qué se puede donar en un centro de acopio",
     ogTitle: "Qué se puede donar en un centro de acopio — Araguaney",
     description:
-      "Víveres, medicamentos y demás categorías aceptadas en un centro de acopio, reglas de la OMS para medicamentos y alimentos, y qué donaciones se rechazan y por qué.",
+      "Víveres, medicamentos y demás categorías aceptadas en un centro de acopio, qué donar después de un terremoto, una inundación o un huracán, y qué se rechaza y por qué.",
     ogEyebrow: "Guía",
     eyebrow: "Guía",
     h1: "Qué se puede donar en un centro de acopio",
@@ -74,6 +80,21 @@ const CONTENT: Record<Locale, Content> = {
       "Alimentos perecederos o sin fecha de caducidad verificable.",
       "Ropa usada o artículos que no correspondan a una categoría del catálogo de ayuda humanitaria.",
     ],
+    emergencyH2: "Qué donar después de un terremoto, una inundación o un huracán",
+    emergencyP:
+      "Las necesidades cambian con el tipo de emergencia y con los días que pasan desde el evento. Esta es una guía general; lo que de verdad falta en cada momento lo dice el inventario de los centros, no una lista fija.",
+    emergency: [
+      { icon: "🏚️", title: "Terremoto o sismo", desc: "Primeros días: agua, víveres listos para comer, insumos de curación y linternas. Después: herramientas, cascos y guantes para la remoción de escombros." },
+      { icon: "🌊", title: "Inundación", desc: "Agua potable embotellada antes que nada, porque la de la red suele contaminarse. Higiene, cloro, pañales y alimentos que no necesiten cocinarse." },
+      { icon: "🌀", title: "Huracán, tifón o tormenta", desc: "Agua, víveres no perecederos, higiene y equipo para despejar y reparar: palas, lonas y cuerdas. Linternas, porque la luz tarda en volver." },
+    ],
+    faqTitle: "Preguntas frecuentes",
+    faq: [
+      { q: "¿Qué donar después de un terremoto?", a: "En los primeros días, agua embotellada, víveres no perecederos listos para comer, artículos de higiene e insumos de curación. Cuando empieza la remoción de escombros, herramientas, cascos y guantes. Antes de comprar, revisa qué falta en el inventario de los centros: lo que sobra se queda en una bodega." },
+      { q: "¿Qué víveres se donan a personas damnificadas?", a: "Alimentos no perecederos en su empaque original, con al menos 180 días de vida útil restante: enlatados con abre fácil, arroz, frijol, pasta, avena y leche en polvo o de larga vida. Evita lo que se echa a perder o necesita refrigeración." },
+      { q: "¿Se puede donar ropa usada?", a: "Por lo general no. Clasificarla, lavarla y transportarla cuesta más de lo que aporta, y ocupa espacio de carga que se necesita para agua, víveres y medicamentos." },
+      { q: "¿Se pueden donar medicamentos?", a: "Sí, si tienen al menos 365 días de vida útil restante, lote y caducidad legibles y no son sustancias controladas, como piden las guías de la OMS para donación de medicamentos." },
+    ],
     ctaLead: "Mira qué se necesita ahora mismo",
     ctaInventory: "Ver inventario disponible",
     ctaGuide: "Cómo organizar un centro de acopio",
@@ -84,7 +105,7 @@ const CONTENT: Record<Locale, Content> = {
     metaTitle: "What can be donated at a collection center",
     ogTitle: "What can be donated at a collection center — Araguaney",
     description:
-      "Relief supplies, medicine and the other categories accepted at a collection center, WHO rules for medicines and food, and which donations are rejected and why.",
+      "Relief supplies, medicine and the other categories accepted at a collection center, what to donate after an earthquake, a flood or a hurricane, and what is rejected and why.",
     ogEyebrow: "Guide",
     eyebrow: "Guide",
     h1: "What can be donated at a collection center",
@@ -112,6 +133,21 @@ const CONTENT: Record<Locale, Content> = {
       "Controlled substances (automatically blocked at intake).",
       "Perishable food or food without a verifiable expiry date.",
       "Used clothing or items that don't match a category in the humanitarian aid catalogue.",
+    ],
+    emergencyH2: "What to donate after an earthquake, a flood or a hurricane",
+    emergencyP:
+      "Needs change with the type of emergency and with the days since the event. This is a general guide; what is actually missing at any moment is shown by the centers' inventory, not by a fixed list.",
+    emergency: [
+      { icon: "🏚️", title: "Earthquake", desc: "First days: water, ready-to-eat food, wound care supplies and flashlights. Later: tools, helmets and gloves for debris removal." },
+      { icon: "🌊", title: "Flood", desc: "Bottled drinking water first, since tap water is often contaminated. Hygiene items, bleach, diapers and food that needs no cooking." },
+      { icon: "🌀", title: "Hurricane, typhoon or storm", desc: "Relief goods come first: water, non-perishable food, hygiene items and gear to clear and repair: shovels, tarps and ropes. Flashlights, because power takes time to return." },
+    ],
+    faqTitle: "Frequently asked questions",
+    faq: [
+      { q: "What should I donate after an earthquake?", a: "In the first days, bottled water, non-perishable ready-to-eat food, hygiene items and wound care supplies. Once debris removal starts, tools, helmets and gloves. Before buying, check what the centers' inventory is missing: surplus ends up sitting in a warehouse." },
+      { q: "Which relief goods are needed after a hurricane or typhoon?", a: "Drinking water, non-perishable food, hygiene kits, flashlights, tarps and tools to clear debris. The exact list depends on the area, so the centers' real-time inventory is a better guide than a generic list." },
+      { q: "Can I donate used clothing?", a: "Usually not. Sorting, washing and transporting it costs more than it contributes, and it takes cargo space needed for water, food and medicine." },
+      { q: "Can medicine be donated?", a: "Yes, if it has at least 365 days of remaining shelf life, a legible batch and expiry, and is not a controlled substance, as the WHO guidelines for medicine donations require." },
     ],
     ctaLead: "See what's needed right now",
     ctaInventory: "View available inventory",
@@ -163,6 +199,7 @@ export default async function QueSePuedeDonarGuidePage({
       dateModified: dates?.modified,
     }),
     breadcrumbSchema(crumbs),
+    faqSchema(c.faq),
   ]
 
   return (
@@ -250,6 +287,28 @@ export default async function QueSePuedeDonarGuidePage({
                 </li>
               ))}
             </ul>
+
+            <h2 style={h2Style}>{c.emergencyH2}</h2>
+            <p style={pStyle}>{c.emergencyP}</p>
+            <div className="grid grid-cols-1 gap-3 mt-4 mb-10">
+              {c.emergency.map((item) => (
+                <div
+                  key={item.title}
+                  className="flex gap-3 items-start p-4"
+                  style={{ border: "1px solid #EEE6D4", borderRadius: 12, background: "#fff" }}
+                >
+                  <span className="text-[22px] flex-none leading-none mt-0.5">{item.icon}</span>
+                  <div>
+                    <p className="text-[14px] font-semibold mb-1" style={{ color: "#2B2723" }}>{item.title}</p>
+                    <p className="text-[13px]" style={{ margin: 0, color: "#6E6557", lineHeight: 1.5 }}>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mb-10">
+              <FaqSection items={c.faq} title={c.faqTitle} />
+            </div>
 
             <div
               className="p-6 md:p-8 text-center"

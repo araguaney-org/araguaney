@@ -80,9 +80,9 @@ const CONTENT: Record<Locale, Content> = {
     crumbGuides: "Guías",
   },
   en: {
-    metaTitle: "Free donation management software for NGOs",
+    metaTitle: "Free donation management software for nonprofits",
     description:
-      "What to look for in free software to manage in-kind donations: item-level intake, traceability, manifests, and aggregation across centers.",
+      "What to look for in free donation software for nonprofits and NGOs that manage in-kind donations: item-level intake, traceability, manifests, and aggregation across centers.",
     ogEyebrow: "Guide",
     eyebrow: "Guide",
     h1: "Free software to manage in-kind donations at an NGO",

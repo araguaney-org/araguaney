@@ -4,7 +4,8 @@ import type { Metadata } from "next"
 import HomeNav from "@/components/HomeNav"
 import HomeFooter from "@/components/HomeFooter"
 import { getDictionary } from "@/lib/i18n"
-import { DEFAULT_OG_IMAGE } from "@/lib/seo"
+import { ogImageUrl } from "@/lib/seo"
+import { eventSeo } from "@/lib/event-seo"
 import { JsonLd } from "@/components/JsonLd"
 import { breadcrumbSchema, eventSchema, type Schema } from "@/lib/structured-data"
 import type { PublicCampaign } from "@/types"
@@ -59,17 +60,15 @@ export async function generateMetadata({
     return { title: "Campaña no encontrada", robots: { index: false, follow: false } }
   }
 
-  const title = `Qué falta — ${campaign.name}`
-  const description =
-    campaign.description ??
-    `Inventario de ayuda humanitaria disponible para ${campaign.name}, actualizado en tiempo real.`
+  const { title, description } = eventSeo(campaign)
+  const ogImage = ogImageUrl(campaign.name, "Ayuda humanitaria")
 
   return {
     title,
     description,
     alternates: { canonical: `/eventos/${campaign.slug}` },
-    openGraph: { title: `${title} — Araguaney`, description, images: [DEFAULT_OG_IMAGE] },
-    twitter: { card: "summary_large_image", title: `${title} — Araguaney`, description, images: [DEFAULT_OG_IMAGE] },
+    openGraph: { title: `${title} — Araguaney`, description, images: [ogImage] },
+    twitter: { card: "summary_large_image", title: `${title} — Araguaney`, description, images: [ogImage] },
   }
 }
 
@@ -94,9 +93,7 @@ export default async function EventoPage({
   const dict = await getDictionary("es")
 
   const path = `/eventos/${campaign.slug}`
-  const description =
-    campaign.description ??
-    `Inventario de ayuda humanitaria disponible para ${campaign.name}, actualizado en tiempo real.`
+  const { description, country } = eventSeo(campaign)
   const structuredData: Schema[] = [
     breadcrumbSchema([
       { name: "Inicio", path: "/" },
@@ -212,6 +209,29 @@ export default async function EventoPage({
           )}
         </div>
       </div>
+
+      {/* ── Qué donar: responde la búsqueda "qué donar a <país>" ── */}
+      {country && (
+        <div className="px-5 md:px-[46px] py-8 md:py-10" style={{ borderTop: "1px solid #EFE7D6" }}>
+          <div className="max-w-2xl mx-auto w-full">
+            <h2
+              className="text-[18px] md:text-[22px]"
+              style={{ fontFamily: "var(--font-source-serif)", fontWeight: 600, margin: "0 0 8px" }}
+            >
+              ¿Qué donar a {country}?
+            </h2>
+            <p className="text-[14.5px]" style={{ color: "#5C5347", lineHeight: 1.6, margin: "0 0 10px" }}>
+              Lo que más ayuda es lo que todavía falta. Revisa el inventario de arriba antes de comprar:
+              lo que ya sobra ocupa espacio en la carga que se necesita para otra cosa. Los centros de
+              acopio solo aceptan producto sellado, con caducidad vigente y en una categoría del
+              catálogo de ayuda humanitaria.
+            </p>
+            <Link href="/guias/que-se-puede-donar" style={{ color: "#1F5E8C", fontWeight: 600, fontSize: 14 }}>
+              Guía: qué se puede donar en un centro de acopio →
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* ── CTA final + link cruzado ── */}
       <div className="px-5 md:px-[46px] py-10 md:py-12 text-center" style={{ borderTop: "1px solid #EFE7D6" }}>

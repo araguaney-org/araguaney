@@ -95,8 +95,8 @@ const CONTENT: Record<Locale, Content> = {
     crumbSelf: "Ayuda humanitaria",
   },
   en: {
-    metaTitle: "Humanitarian Aid Software",
-    ogTitle: "Humanitarian Aid Software — Araguaney",
+    metaTitle: "Humanitarian aid and disaster relief software",
+    ogTitle: "Humanitarian aid and disaster relief software — Araguaney",
     ogImageTitle: "Humanitarian aid software",
     description:
       "What software works for emergency donations? Araguaney handles intake, homogeneous boxes with QR codes, and an exportable manifest for any humanitarian aid scenario: earthquakes, floods, migration crises, and fires.",
