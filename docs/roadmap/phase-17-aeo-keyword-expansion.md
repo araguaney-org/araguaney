@@ -86,6 +86,19 @@ intención **comercial/comparativa** (fondo de embudo — donde la IA ama tablas
 - aduana México ayuda humanitaria (SAT / régimen de importación)
 - centro de acopio [Chile / Colombia / Perú] (expansión LATAM)
 
+### Revisión con datos reales (2026-10-08)
+
+Search Console de `www.araguaney.lat`, últimos tres meses: 1.22K impresiones, 23 clics,
+posición media 10.5. La consulta más vista es definicional (**"qué es un centro de acopio"** y
+variantes, unas 75 impresiones y cero clics), seguida de **"software para ong"** y
+**"centro de acopio en inglés"**. El pilar `/centro-de-acopio` ya respondía la pregunta, pero su
+título solo hablaba de software. Se ajustaron títulos y copy sin cambiar URLs: el pilar nombra la
+pregunta en el título y suma una FAQ con la traducción; la guía de ONG lidera con "Software para
+ONG"; y entran sinónimos que el sitio no usaba en ninguna página: **víveres** y **punto de acopio**
+en español, **donation drop-off point**, **relief supplies**, **donation tracking** y
+**donation management software** en inglés. Medir el efecto en la revisión mensual (Fase 11,
+task 22) contra la propiedad `araguaney.org`.
+
 ### Cluster H — Preguntas directas (AEO / People-Also-Ask / voz)
 
 - ¿qué es un centro de acopio y cómo funciona?

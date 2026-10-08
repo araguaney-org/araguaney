@@ -51,7 +51,7 @@ interface Content {
 
 const CONTENT: Record<Locale, Content> = {
   es: {
-    metaTitle: "Software para centro de acopio",
+    metaTitle: "Centro de acopio: qué es y software para gestionarlo",
     ogTitle: "Software para centro de acopio — Araguaney",
     description:
       "¿Qué es un centro de acopio y qué software necesita? Araguaney estandariza el registro por ítem, las cajas homogéneas con QR, el manifiesto exportable y el panel nacional en tiempo real.",
@@ -63,7 +63,7 @@ const CONTENT: Record<Locale, Content> = {
     heroCta: "Sumar mi centro de acopio",
     whatH2: "¿Qué es un centro de acopio?",
     whatP:
-      "Un centro de acopio recibe donaciones en especie (medicamentos, alimentos, agua, higiene, herramientas) para canalizarlas hacia zonas afectadas por una emergencia. Cuando varios centros operan cada uno con su propio método, es imposible saber qué hay disponible a nivel nacional o preparar un envío que cumpla las reglas de un régimen de ayuda humanitaria: cajas homogéneas y manifiesto detallado. Sin ese orden, los envíos se atoran.",
+      "Un centro de acopio, también llamado punto de acopio o centro de acopio de víveres, recibe donaciones en especie (medicamentos, alimentos, agua, higiene, herramientas) para canalizarlas hacia zonas afectadas por una emergencia. Cuando varios centros operan cada uno con su propio método, es imposible saber qué hay disponible a nivel nacional o preparar un envío que cumpla las reglas de un régimen de ayuda humanitaria: cajas homogéneas y manifiesto detallado. Sin ese orden, los envíos se atoran.",
     differsH2: "Todo lo que necesita un centro de acopio",
     differs: [
       { icon: "📦", title: "Caja homogénea + QR", desc: "Un solo producto, lote y caducidad por caja. QR y etiqueta impresos al sellar: trazable de punta a punta." },
@@ -75,6 +75,7 @@ const CONTENT: Record<Locale, Content> = {
     faqTitle: "Preguntas frecuentes",
     faq: [
       { q: "¿Qué es un centro de acopio?", a: "Es un punto físico donde se reciben, clasifican y preparan donaciones en especie para canalizarlas hacia zonas afectadas por una emergencia. No entrega ayuda al beneficiario final: prepara y consolida la carga para su envío." },
+      { q: "¿Cómo se dice centro de acopio en inglés?", a: "Collection center o donation collection center. Para el lugar donde la gente deja sus donaciones también se usa donation drop-off point, y a lo que se recibe se le llama relief supplies." },
       { q: "¿Cuánto cuesta el software de Araguaney?", a: "Es gratuito para centros de acopio y coordinaciones humanitarias: registro por ítem, cajas con QR, manifiestos y panel agregado, sin costo de licencia ni límite de cajas." },
       { q: "¿Qué diferencia a Araguaney de una hoja de cálculo?", a: "Valida reglas de donación (caducidad, controlados), genera QR y manifiestos automáticamente, registra la trazabilidad de cada caja al envío y suma el stock de varios centros en un panel nacional, cosas que una hoja no hace." },
       { q: "¿Se puede usar para cualquier emergencia?", a: "Sí. El estándar es genérico: sismos, inundaciones, incendios o crisis migratorias. No está atado a un evento específico." },
@@ -91,10 +92,10 @@ const CONTENT: Record<Locale, Content> = {
     crumbSelf: "Centro de acopio",
   },
   en: {
-    metaTitle: "Collection center software",
+    metaTitle: "Donation collection center software",
     ogTitle: "Collection center software — Araguaney",
     description:
-      "What is a collection center and what software does it need? Araguaney standardizes item-level intake, homogeneous boxes with QR codes, the exportable manifest, and a national dashboard in real time.",
+      "What is a collection center and what software does it need? Araguaney standardizes donation tracking: item-level intake, homogeneous boxes with QR codes, the exportable manifest, and a national dashboard in real time.",
     ogEyebrow: "Collection center",
     eyebrow: "Collection center software",
     h1: "The standard to register, pack and ship your collection center's donations",
@@ -103,7 +104,7 @@ const CONTENT: Record<Locale, Content> = {
     heroCta: "Add my collection center",
     whatH2: "What is a collection center?",
     whatP:
-      "A collection center receives in-kind donations (medicine, food, water, hygiene, tools) to channel them toward areas hit by an emergency. When several centers each work their own way, it's impossible to know what's available nationally or to prepare a shipment that meets the rules of a humanitarian aid regime: homogeneous boxes and a detailed manifest. Without that order, shipments get stuck.",
+      "A collection center, also called a donation drop-off point or relief supply center, receives in-kind donations (medicine, food, water, hygiene, tools) to channel them toward areas hit by an emergency. When several centers each work their own way, it's impossible to know what's available nationally or to prepare a shipment that meets the rules of a humanitarian aid regime: homogeneous boxes and a detailed manifest. Without that order, shipments get stuck.",
     differsH2: "Everything a collection center needs",
     differs: [
       { icon: "📦", title: "Homogeneous box + QR", desc: "One product, batch and expiry per box. QR and label printed on sealing: traceable end to end." },

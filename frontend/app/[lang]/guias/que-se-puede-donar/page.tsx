@@ -45,12 +45,12 @@ const CONTENT: Record<Locale, Content> = {
     metaTitle: "Qué se puede donar en un centro de acopio",
     ogTitle: "Qué se puede donar en un centro de acopio — Araguaney",
     description:
-      "Categorías aceptadas en un centro de acopio, reglas de la OMS para medicamentos y alimentos, y qué donaciones se rechazan y por qué.",
+      "Víveres, medicamentos y demás categorías aceptadas en un centro de acopio, reglas de la OMS para medicamentos y alimentos, y qué donaciones se rechazan y por qué.",
     ogEyebrow: "Guía",
     eyebrow: "Guía",
     h1: "Qué se puede donar en un centro de acopio",
     intro:
-      "No toda donación con buena intención es útil o segura para canalizar hacia una emergencia. Estas son las categorías que un centro de acopio bien organizado acepta, y las reglas detrás de cada una.",
+      "No toda donación con buena intención es útil o segura para canalizar hacia una emergencia, ni siquiera los víveres. Estas son las categorías que un centro de acopio bien organizado acepta, y las reglas detrás de cada una.",
     categoriesH2: "Categorías aceptadas",
     categorias: [
       { icon: "💊", title: "Medicamentos", desc: "Con INN, lote y caducidad. Mínimo 365 días de vida útil restante. Sin sustancias controladas." },
@@ -84,7 +84,7 @@ const CONTENT: Record<Locale, Content> = {
     metaTitle: "What can be donated at a collection center",
     ogTitle: "What can be donated at a collection center — Araguaney",
     description:
-      "Categories accepted at a collection center, WHO rules for medicines and food, and which donations are rejected and why.",
+      "Relief supplies, medicine and the other categories accepted at a collection center, WHO rules for medicines and food, and which donations are rejected and why.",
     ogEyebrow: "Guide",
     eyebrow: "Guide",
     h1: "What can be donated at a collection center",
