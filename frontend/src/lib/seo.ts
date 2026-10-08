@@ -6,13 +6,10 @@ import {
   localizedPath,
 } from "@/lib/routes"
 
-// Canonical host is www: production 308-redirects the apex to www, and the
-// Google Search Console property is verified on www. Keep this in sync with
-// NEXT_PUBLIC_SITE_URL in Vercel and the redirect at the edge — every
-// canonical/sitemap/robots URL derives from here.
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.araguaney.org"
-).replace(/\/$/, "")
+import { SITE_URL } from "@/lib/site-url"
+
+// Every canonical/sitemap/robots URL derives from SITE_URL (see site-url.ts).
+export { SITE_URL }
 
 // El dominio que lee una persona: pies de página, direcciones de contacto,
 // llms.txt. Sale de SITE_URL para que mudar de dominio (Fase 29) sea cambiar
