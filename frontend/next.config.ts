@@ -1,5 +1,6 @@
 import type { NextConfig } from "next"
 import { withSentryConfig } from "@sentry/nextjs"
+import { legacyDomainRedirects } from "./src/lib/legacy-domains"
 
 // Las fichas publicas de QR incrustan la imagen directo del backend
 // (`{API}/b/{code}/qr.png`), asi que su origen tiene que estar en img-src o el
@@ -57,6 +58,9 @@ const nextConfig: NextConfig = {
       // reales, y un 308 se queda cacheado en el navegador aunque después /p/
       // tenga su propia página.
       { source: "/p/:code", destination: "/qr/:code", permanent: false },
+      // El dominio anterior, por si la redirección de Vercel no alcanza la
+      // petición (ver src/lib/legacy-domains.ts).
+      ...legacyDomainRedirects(),
     ]
   },
   // The /dashboard/ayuda/[slug] pages read content/manuals/*.html via fs at
