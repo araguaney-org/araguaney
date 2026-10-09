@@ -49,12 +49,12 @@ interface Content {
 
 const CONTENT: Record<Locale, Content> = {
   es: {
-    metaTitle: "Cómo organizar un centro de acopio",
+    metaTitle: "Cómo hacer y organizar un centro de acopio",
     description:
-      "Guía práctica para organizar un centro de acopio desde cero: roles, registro de donaciones, cajas homogéneas, manifiesto y reglas de rechazo.",
+      "Cómo hacer un centro de acopio desde cero y cómo funciona: roles, registro de donaciones, cajas homogéneas, manifiesto y reglas de rechazo.",
     ogEyebrow: "Guía",
     eyebrow: "Guía",
-    h1: "Cómo organizar un centro de acopio",
+    h1: "Cómo hacer y organizar un centro de acopio",
     intro:
       "Un centro de acopio recibe donaciones en especie (medicamentos, alimentos, agua, higiene, herramientas) para canalizarlas hacia zonas afectadas por una emergencia. Esta guía cubre lo esencial para organizarlo bien desde el primer día, sin importar si es tu primer centro o si ya llevas semanas operando de forma improvisada.",
     sections: [
@@ -81,6 +81,10 @@ const CONTENT: Record<Locale, Content> = {
     ],
     faqTitle: "Preguntas frecuentes",
     faq: [
+      {
+        q: "¿Cómo funciona un centro de acopio?",
+        a: "Recibe donaciones en especie, las registra por ítem, las empaca en cajas homogéneas con su etiqueta, las agrupa en tarimas y prepara el envío con su manifiesto. No entrega la ayuda a quien la recibe: prepara y consolida la carga para que salga ordenada.",
+      },
       {
         q: "¿Cuántas personas se necesitan para operar un centro de acopio?",
         a: "Con 2-3 voluntarios y un coordinador es suficiente para empezar: alguien recibe y registra, alguien empaca y sella cajas, y el coordinador consolida tarimas y gestiona envíos.",
@@ -127,12 +131,12 @@ const CONTENT: Record<Locale, Content> = {
     crumbGuides: "Guías",
   },
   en: {
-    metaTitle: "How to organize a collection center",
+    metaTitle: "How to run a donation drive and organize a collection center",
     description:
-      "A practical guide to organizing a collection center from scratch: roles, donation intake, homogeneous boxes, the manifest, and rejection rules.",
+      "How to run a donation drive and organize a collection center from scratch: roles, donation intake, homogeneous boxes, the manifest, and rejection rules.",
     ogEyebrow: "Guide",
     eyebrow: "Guide",
-    h1: "How to organize a collection center",
+    h1: "How to run a donation drive and organize a collection center",
     intro:
       "A collection center receives in-kind donations (medicine, food, water, hygiene, tools) to channel them toward areas hit by an emergency. This guide covers the essentials to organize it well from day one, whether it's your first center or you've already been operating in an improvised way for weeks.",
     sections: [
@@ -159,6 +163,14 @@ const CONTENT: Record<Locale, Content> = {
     ],
     faqTitle: "Frequently asked questions",
     faq: [
+      {
+        q: "What is a donation drive, and how is it different from a collection center?",
+        a: "A donation drive is a time-limited campaign to collect donations for a cause. A collection center is the place where those donations are received, registered, packed and prepared to ship. A drive needs a center behind it: without one, the donations pile up unsorted.",
+      },
+      {
+        q: "How does a collection center work?",
+        a: "It receives in-kind donations, registers them item by item, packs them into homogeneous boxes with their label, groups them onto pallets and prepares the shipment with its manifest. It does not hand the aid to the final recipient: it prepares and consolidates the cargo so it leaves in order.",
+      },
       {
         q: "How many people are needed to run a collection center?",
         a: "With 2-3 volunteers and a coordinator it's enough to get started: someone receives and registers, someone packs and seals boxes, and the coordinator consolidates pallets and manages shipments.",

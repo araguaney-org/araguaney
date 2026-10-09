@@ -99,7 +99,7 @@ const CONTENT: Record<Locale, Content> = {
     ogTitle: "Humanitarian aid and disaster relief software — Araguaney",
     ogImageTitle: "Humanitarian aid software",
     description:
-      "What software works for emergency donations? Araguaney handles intake, homogeneous boxes with QR codes, and an exportable manifest for any humanitarian aid scenario: earthquakes, floods, migration crises, and fires.",
+      "What software works for emergency donations? Araguaney handles the intake of relief goods, homogeneous boxes with QR codes, and an exportable manifest for any disaster relief operation: earthquakes, floods, migration crises, and fires.",
     ogEyebrow: "Humanitarian aid",
     eyebrow: "Humanitarian aid",
     h1: "Humanitarian aid software for any emergency scenario",

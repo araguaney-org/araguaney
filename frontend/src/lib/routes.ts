@@ -89,6 +89,10 @@ export const ROUTE_SLUGS: Record<string, Record<Locale, string>> = {
     es: "guias/sistema-de-inventario-para-damnificados",
     en: "guides/inventory-system-for-disaster-relief",
   },
+  "guias/inventario-de-donaciones-con-codigo-qr": {
+    es: "guias/inventario-de-donaciones-con-codigo-qr",
+    en: "guides/qr-code-inventory-for-donations",
+  },
   "glosario": { es: "glosario", en: "glossary" },
   "necesidades": { es: "necesidades", en: "needs" },
   "necesidades/medicamentos": { es: "necesidades/medicamentos", en: "needs/medicine" },

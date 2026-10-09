@@ -107,7 +107,7 @@ const CONTENT: Record<Locale, Content> = {
     ],
     whenH2: "¿Cuándo alcanza una hoja de cálculo?",
     templateP:
-      "Si ese es tu caso, empieza con una plantilla de control de donaciones que ya sigue el estándar: una fila por caja, con producto, lote, caducidad, cantidad y peso. Abre en Excel, Google Sheets o LibreOffice.",
+      "Si ese es tu caso, empieza con un formato de donaciones recibidas, o plantilla de control de donaciones, que ya sigue el estándar: una fila por caja, con producto, lote, caducidad, cantidad y peso. Abre en Excel, Google Sheets o LibreOffice.",
     templateCta: "Descargar plantilla gratis (CSV para Excel)",
     whenP1:
       "Seamos honestos: si estás juntando unas cuantas cajas para un envío único y pequeño, una hoja de cálculo está perfectamente bien. No necesitas un sistema para eso, y montar uno sería sobre-ingeniería.",
@@ -171,7 +171,7 @@ const CONTENT: Record<Locale, Content> = {
     ],
     whenH2: "When is a spreadsheet enough?",
     templateP:
-      "If that's your case, start with a donation tracking spreadsheet template that already follows the standard: one row per box, with product, batch, expiry, quantity and weight. It opens in Excel, Google Sheets or LibreOffice.",
+      "If that's your case, start with an in-kind donation tracking form, or donation tracking spreadsheet template, that already follows the standard: one row per box, with product, batch, expiry, quantity and weight. It opens in Excel, Google Sheets or LibreOffice.",
     templateCta: "Download the free template (CSV for Excel)",
     whenP1:
       "Let's be honest: if you're gathering a few boxes for a single small shipment, a spreadsheet is perfectly fine. You don't need a system for that, and setting one up would be over-engineering.",

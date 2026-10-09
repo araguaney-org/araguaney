@@ -42,12 +42,13 @@ humanitarias, sin límite de cajas.
 ## Guías
 
 - [Guías](${SITE_URL}/guias): índice de guías prácticas para operar un centro de acopio.
-- [Cómo organizar un centro de acopio](${SITE_URL}/guias/como-organizar-un-centro-de-acopio): cómo montar y operar un centro — roles, registro por ítem, cajas homogéneas, manifiesto y reglas de rechazo.
+- [Cómo hacer y organizar un centro de acopio](${SITE_URL}/guias/como-organizar-un-centro-de-acopio): cómo montar y operar un centro — roles, registro por ítem, cajas homogéneas, manifiesto y reglas de rechazo.
 - [Qué se puede donar](${SITE_URL}/guias/que-se-puede-donar): qué se acepta y qué se rechaza — categorías, reglas OMS de medicamentos (vida útil, controlados) y de alimentos.
-- [Cómo preparar carga humanitaria para aduana](${SITE_URL}/guias/como-preparar-carga-humanitaria-para-aduana): qué exige el régimen de envío y qué debe incluir el manifiesto/packing list para que la carga no se atore.
+- [Packing list y manifiesto de carga humanitaria para aduana](${SITE_URL}/guias/como-preparar-carga-humanitaria-para-aduana): qué exige el régimen de envío y qué debe incluir el manifiesto/packing list para que la carga no se atore.
 - [Cómo registrar y organizar voluntarios](${SITE_URL}/guias/como-registrar-voluntarios-en-un-centro-de-acopio): roles del equipo y por qué cada voluntario opera con su propia cuenta.
 - [Software gratis para gestionar donaciones en una ONG](${SITE_URL}/guias/software-gratis-para-gestionar-donaciones-ong): qué buscar en un software gratuito de donaciones en especie (registro por ítem, trazabilidad, manifiesto, agregación entre centros).
 - [Sistema de inventario para damnificados](${SITE_URL}/guias/sistema-de-inventario-para-damnificados): cómo montar un inventario de ayuda que sí sirva durante una emergencia.
+- [Inventario de donaciones con código QR](${SITE_URL}/guias/inventario-de-donaciones-con-codigo-qr): qué guarda de verdad un QR, un código único por caja, qué debe llevar la etiqueta y cuándo alcanza una hoja de cálculo.
 
 ## Glosario
 
