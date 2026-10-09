@@ -82,7 +82,7 @@ const CONTENT: Record<Locale, Content> = {
     ],
     emergencyH2: "Qué donar después de un terremoto, una inundación o un huracán",
     emergencyP:
-      "Las necesidades cambian con el tipo de emergencia y con los días que pasan desde el evento. Esta es una guía general; lo que de verdad falta en cada momento lo dice el inventario de los centros, no una lista fija.",
+      "Las necesidades cambian con el tipo de emergencia y con los días que pasan desde el evento. Esta es una lista general de donaciones para damnificados; lo que de verdad falta en cada momento lo dice el inventario de los centros, no una lista fija.",
     emergency: [
       { icon: "🏚️", title: "Terremoto o sismo", desc: "Primeros días: agua, víveres listos para comer, insumos de curación y linternas. Después: herramientas, cascos y guantes para la remoción de escombros." },
       { icon: "🌊", title: "Inundación", desc: "Agua potable embotellada antes que nada, porque la de la red suele contaminarse. Higiene, cloro, pañales y alimentos que no necesiten cocinarse." },

@@ -13,12 +13,13 @@ export interface ContentDates {
 // ~quarterly cadence lose AI citations at ~3x the normal rate, and Google shows
 // the date in results. Keep the refresh cadence quarterly (Fase 17 task 15).
 export const CONTENT_DATES: Partial<Record<RouteKey, ContentDates>> = {
-  "guias/como-organizar-un-centro-de-acopio": { published: "2026-07-21", modified: "2026-07-24" },
+  "guias/como-organizar-un-centro-de-acopio": { published: "2026-07-21", modified: "2026-10-08" },
   "guias/que-se-puede-donar": { published: "2026-07-21", modified: "2026-10-08" },
-  "guias/como-preparar-carga-humanitaria-para-aduana": { published: "2026-07-21", modified: "2026-07-24" },
+  "guias/como-preparar-carga-humanitaria-para-aduana": { published: "2026-07-21", modified: "2026-10-08" },
   "guias/como-registrar-voluntarios-en-un-centro-de-acopio": { published: "2026-07-21", modified: "2026-07-24" },
   "guias/software-gratis-para-gestionar-donaciones-ong": { published: "2026-07-21", modified: "2026-10-08" },
   "guias/sistema-de-inventario-para-damnificados": { published: "2026-07-21", modified: "2026-07-24" },
+  "guias/inventario-de-donaciones-con-codigo-qr": { published: "2026-10-08", modified: "2026-10-08" },
 }
 
 const MONTHS: Record<Locale, readonly string[]> = {

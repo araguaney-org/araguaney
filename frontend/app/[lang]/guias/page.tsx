@@ -18,6 +18,7 @@ const GUIDE_KEYS: RouteKey[] = [
   "guias/como-registrar-voluntarios-en-un-centro-de-acopio",
   "guias/software-gratis-para-gestionar-donaciones-ong",
   "guias/sistema-de-inventario-para-damnificados",
+  "guias/inventario-de-donaciones-con-codigo-qr",
 ]
 
 interface GuideCard {
@@ -52,12 +53,13 @@ const CONTENT: Record<Locale, Content> = {
     crumbHome: "Inicio",
     crumbSelf: "Guías",
     guides: [
-      { title: "Cómo organizar un centro de acopio", desc: "Roles, registro de donaciones por ítem, cajas homogéneas, manifiesto y reglas de rechazo: todo lo esencial para arrancar bien desde el primer día." },
+      { title: "Cómo hacer y organizar un centro de acopio", desc: "Roles, registro de donaciones por ítem, cajas homogéneas, manifiesto y reglas de rechazo: todo lo esencial para arrancar bien desde el primer día." },
       { title: "Qué se puede donar", desc: "Categorías aceptadas, reglas de la OMS para medicamentos y alimentos, y qué donaciones se rechazan y por qué." },
-      { title: "Cómo preparar carga para aduana", desc: "Qué exige el régimen de envío humanitario, qué debe incluir un manifiesto/packing list y los errores más comunes que atoran un envío." },
+      { title: "Packing list y manifiesto de carga para aduana", desc: "Qué exige el régimen de envío humanitario, qué debe incluir un manifiesto/packing list y los errores más comunes que atoran un envío." },
       { title: "Cómo registrar y organizar voluntarios", desc: "Cómo estructurar los roles del equipo (quién recibe, quién empaca y quién coordina) para no perder trazabilidad desde el primer día." },
       { title: "Software gratis para gestionar donaciones", desc: "Qué buscar en un software gratuito para gestionar donaciones en especie: registro por ítem, trazabilidad, manifiesto y agregación entre centros." },
       { title: "Sistema de inventario para damnificados", desc: "Cómo montar un inventario de ayuda que sí sirva en una emergencia: registro por ítem, control de caducidad y visibilidad de qué falta." },
+      { title: "Inventario de donaciones con código QR", desc: "Un código único por caja, la etiqueta que debe llevar y cómo escanearla: qué guarda de verdad un QR y cuándo alcanza una hoja de cálculo." },
     ],
   },
   en: {
@@ -73,12 +75,13 @@ const CONTENT: Record<Locale, Content> = {
     crumbHome: "Home",
     crumbSelf: "Guides",
     guides: [
-      { title: "How to organize a collection center", desc: "Roles, item-level donation intake, homogeneous boxes, manifest and rejection rules: the essentials to start off right from day one." },
+      { title: "How to run a donation drive and organize a collection center", desc: "Roles, item-level donation intake, homogeneous boxes, manifest and rejection rules: the essentials to start off right from day one." },
       { title: "What can be donated", desc: "Accepted categories, WHO rules for medicine and food, and which donations are rejected and why." },
-      { title: "How to prepare cargo for customs", desc: "What the humanitarian shipping regime requires, what a manifest/packing list must include, and the most common mistakes that stall a shipment." },
+      { title: "Packing list and cargo manifest for customs", desc: "What the humanitarian shipping regime requires, what a manifest/packing list must include, and the most common mistakes that stall a shipment." },
       { title: "How to register and organize volunteers", desc: "How to structure the team's roles (who receives, who packs and who coordinates) so you don't lose traceability from day one." },
       { title: "Free software to manage donations", desc: "What to look for in free software to manage in-kind donations: item-level intake, traceability, manifest and cross-center aggregation." },
       { title: "Inventory system for disaster relief", desc: "How to set up a relief inventory that actually works in an emergency: item-level intake, expiry control and visibility of what's missing." },
+      { title: "QR code inventory for donations", desc: "A unique code per box, what the label must carry and how to scan it: what a QR really stores and when a spreadsheet is enough." },
     ],
   },
 }

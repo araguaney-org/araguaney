@@ -125,6 +125,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         "guias/como-registrar-voluntarios-en-un-centro-de-acopio",
         "guias/software-gratis-para-gestionar-donaciones-ong",
         "guias/sistema-de-inventario-para-damnificados",
+        "guias/inventario-de-donaciones-con-codigo-qr",
       ] as const
     ).map((key) => ({
       url: absoluteUrl(localizedPath(key, "es")),

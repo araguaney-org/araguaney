@@ -55,7 +55,7 @@ export const SCENARIOS: readonly Scenario[] = [
       label: "Floods",
       metaTitle: "Collection software for floods",
       metaDescription:
-        "How to coordinate donations after a flood? Araguaney standardizes the intake of water, hygiene, medicine and food with homogeneous boxes, QR codes and a shipping manifest.",
+        "How to coordinate donations after a flood? Araguaney standardizes the intake of relief goods (water, hygiene, medicine and food) with homogeneous boxes, QR codes and a shipping manifest.",
       h1: "Coordinating donations after a flood",
       intro:
         "A flood displaces families, contaminates water and overwhelms shelters within hours. In-kind aid arrives fast, but without order it's wasted. Araguaney puts collection centers under one standard so donations are registered, packed well, and reach where they're needed.",
