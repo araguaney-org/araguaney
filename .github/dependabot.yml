@@ -33,6 +33,11 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+      # SQLAlchemy 2.1 resolves postgresql:// URLs to psycopg (v3), which the
+      # backend does not install, so it fails to import. Lift this rule when the
+      # driver and the DATABASE_URL scheme move together (see requirements.txt).
+      - dependency-name: "sqlalchemy"
+        versions: [">=2.1"]
 
   # GitHub Actions — keep workflow action versions current
   - package-ecosystem: "github-actions"
