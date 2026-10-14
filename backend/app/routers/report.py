@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone, tzinfo
 from uuid import UUID
 
 from fastapi import APIRouter, BackgroundTasks, Depends, Query, Request
@@ -20,6 +20,7 @@ from app.schemas.report import (
     ReportSummary,
     ShrinkageSummary,
 )
+from app.utils.center_time import local_date, zone_for, zone_name
 from app.utils.errors import api_error
 from app.utils.cloudflare import get_client_ip
 from app.utils.rate_limit import limiter
@@ -40,14 +41,15 @@ def _now() -> datetime:
     return datetime.now(timezone.utc)
 
 
-def _resolve_dates(start: date | None, end: date | None) -> tuple[date, date]:
-    # El día es UTC, igual que las marcas de tiempo guardadas: el repositorio
-    # convierte estas fechas con `_start_dt`/`_end_dt`, que son UTC. Con
-    # `date.today()` la respuesta dependía del reloj del proceso, así que un
-    # servidor fuera de UTC cortaba la ventana en otro punto que las filas que
-    # va a contar — y en México, después de las 18:00, la ventana por omisión
-    # terminaba antes de lo capturado esa misma tarde.
-    today = _now().date()
+def _resolve_dates(
+    start: date | None, end: date | None, tz: tzinfo = timezone.utc
+) -> tuple[date, date]:
+    # "Hoy" es el día del centro consultado (Fase 27), y el repositorio corta
+    # la ventana en esa misma zona con `day_window_utc`: las dos mitades tienen
+    # que coincidir o la ventana por omisión termina antes de lo capturado esa
+    # tarde. Antes salía de `date.today()`, el reloj del proceso, que no es de
+    # nadie.
+    today = local_date(_now(), tz)
     end = end or today
     start = start or (today - timedelta(days=_DEFAULT_DAYS - 1))
     if start > end:
@@ -55,6 +57,30 @@ def _resolve_dates(start: date | None, end: date | None) -> tuple[date, date]:
     if (end - start).days > _MAX_RANGE_DAYS:
         start = end - timedelta(days=_MAX_RANGE_DAYS)
     return start, end
+
+
+def _report_zone(repo: ReportRepository, scope: UUID | None) -> tzinfo:
+    """La zona en que se cortan los días de este reporte.
+
+    Un reporte acotado a un centro usa la del centro: dos personas que miran el
+    mismo centro desde lugares distintos ven los mismos números. El agregado
+    nacional mezcla centros en husos distintos y no tiene un día propio, así que
+    sigue en UTC y lo declara (`ReportSummary.timezone`).
+    """
+    if scope is None:
+        return timezone.utc
+    return zone_for(repo.center_timezone(scope))
+
+
+def _report_window(
+    repo: ReportRepository, user: User, start: date | None, end: date | None
+) -> tuple[UUID | None, tzinfo, date, date]:
+    """Alcance, zona y días de un reporte, resueltos juntos para que no se
+    desalineen: la ventana se corta en la zona del mismo alcance que se cuenta."""
+    scope = tenant_scope(user)
+    tz = _report_zone(repo, scope)
+    s, e = _resolve_dates(start, end, tz)
+    return scope, tz, s, e
 
 
 def _require_campaign_access(repo: ReportRepository, user: User, campaign_id: UUID) -> None:
@@ -76,8 +102,8 @@ def get_summary(
 ):
     repo = ReportRepository(db)
     _require_campaign_access(repo, current_user, campaign_id)
-    s, e = _resolve_dates(start, end)
-    return repo.summary(campaign_id, tenant_scope(current_user), s, e)
+    scope, tz, s, e = _report_window(repo, current_user, start, end)
+    return {**repo.summary(campaign_id, scope, s, e, tz), "timezone": zone_name(tz)}
 
 
 @router.get("/campaign/{campaign_id}/shrinkage", response_model=ShrinkageSummary)
@@ -108,8 +134,8 @@ def get_activity(
 ):
     repo = ReportRepository(db)
     _require_campaign_access(repo, current_user, campaign_id)
-    s, e = _resolve_dates(start, end)
-    return repo.activity(campaign_id, tenant_scope(current_user), s, e)
+    scope, tz, s, e = _report_window(repo, current_user, start, end)
+    return repo.activity(campaign_id, scope, s, e, tz)
 
 
 @router.get("/campaign/{campaign_id}/by-category", response_model=list[CategoryBreakdown])
@@ -129,8 +155,8 @@ def get_by_category(
         raise api_error("INVALID_STATUS", f"Status must be one of {BOX_STATUSES}", field="status")
     repo = ReportRepository(db)
     _require_campaign_access(repo, current_user, campaign_id)
-    s, e = _resolve_dates(start, end)
-    return repo.by_category(campaign_id, tenant_scope(current_user), s, e, status=status)
+    scope, tz, s, e = _report_window(repo, current_user, start, end)
+    return repo.by_category(campaign_id, scope, s, e, tz, status=status)
 
 
 @router.get("/campaign/{campaign_id}/by-center", response_model=list[CenterBreakdown])
@@ -145,8 +171,8 @@ def get_by_center(
 ):
     repo = ReportRepository(db)
     _require_campaign_access(repo, current_user, campaign_id)
-    s, e = _resolve_dates(start, end)
-    return repo.by_center(campaign_id, tenant_scope(current_user), s, e)
+    scope, tz, s, e = _report_window(repo, current_user, start, end)
+    return repo.by_center(campaign_id, scope, s, e, tz)
 
 
 @router.get("/campaign/{campaign_id}/countries", response_model=list[CountryPoint])
@@ -161,8 +187,8 @@ def get_countries(
 ):
     repo = ReportRepository(db)
     _require_campaign_access(repo, current_user, campaign_id)
-    s, e = _resolve_dates(start, end)
-    return repo.countries(campaign_id, tenant_scope(current_user), s, e)
+    scope, tz, s, e = _report_window(repo, current_user, start, end)
+    return repo.countries(campaign_id, scope, s, e, tz)
 
 
 @router.post("/campaign/{campaign_id}/export.csv", response_model=ExportJobOut, status_code=202)
@@ -179,8 +205,7 @@ def export_csv(
     """Queue the campaign CSV export generation (rate-limited: 10/min). Poll GET /v1/exports/{id}."""
     repo = ReportRepository(db)
     _require_campaign_access(repo, current_user, campaign_id)
-    s, e = _resolve_dates(start, end)
-    scope = tenant_scope(current_user)
+    scope, tz, s, e = _report_window(repo, current_user, start, end)
 
     job = ExportJobRepository(db).create(
         kind="REPORT_EXPORT_CSV",
@@ -189,6 +214,7 @@ def export_csv(
             "center_id": str(scope) if scope else None,
             "start": s.isoformat(),
             "end": e.isoformat(),
+            "timezone": zone_name(tz),
         },
         requested_by=current_user.id,
         center_id=scope,

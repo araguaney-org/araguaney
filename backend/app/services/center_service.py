@@ -4,6 +4,7 @@ from app.models.center import Center
 from app.repositories.center_repository import CenterRepository
 from app.schemas.center import CenterCreate, CenterUpdate
 from app.services.base import BaseService
+from app.utils.center_time import single_timezone_for_country
 from app.utils.errors import api_error
 
 
@@ -29,6 +30,7 @@ class CenterService(BaseService):
             state_name=data.state_name,
             legal_name=data.legal_name,
             tax_id=data.tax_id,
+            timezone=data.timezone or single_timezone_for_country(data.country_code),
         )
         return CenterRepository(self.db).save(center)
 

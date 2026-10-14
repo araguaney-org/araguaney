@@ -1,5 +1,10 @@
 # Fase 27 — De quién es el día: zona horaria del centro
 
+> **Estado: completa (2026-10-13).** Se adelantó por el primer centro externo,
+> en Tampa (`America/New_York`): ahí UTC corta el día a las 20:00 en verano y a
+> las 19:00 en invierno, así que una tarde normal de captura caía en el día
+> siguiente.
+
 > Un reporte dice "las cajas de hoy" y hay que poder responder de quién es ese
 > hoy. Hoy la respuesta es UTC, así que para un centro en Monterrey el día del
 > reporte empieza a las 18:00 del día anterior: lo capturado el jueves por la
@@ -85,12 +90,12 @@ justamente el cálculo que esta fase cambia.
 
 | # | Tarea | Descripción | Complejidad | Estado |
 |---|-------|-------------|-------------|--------|
-| 1 | Columna `timezone` en `Center` | Nombre IANA (`America/Monterrey`), nullable con `UTC` como comportamiento por omisión mientras esté vacía. Se valida contra `zoneinfo` al escribir: un nombre inventado tiene que fallar en el formulario y no meses después en una consulta. Migración reversible. | 🟢 Baja | ⬜ Pendiente |
-| 2 | Captura y sugerencia en el alta del centro | Campo en el formulario de la administración nacional, junto a país y estado, que es de donde ya salen los otros datos del centro. Pre-llenado con la zona del navegador; la lista se acota por `country_code`. | 🟠 Media | ⬜ Pendiente |
-| 3 | Los reportes cortan en la zona del centro | `_resolve_dates` y los límites del repositorio dejan de asumir UTC y usan la zona del centro consultado. Sin depender del dialecto, por lo de arriba. Un centro sin zona sigue en UTC, así que nada cambia hasta que alguien la capture. | 🔴 Alta | ⬜ Pendiente |
-| 4 | La fecha de captura usa la zona del centro | `_capture_date()` recibe el centro. Es una mejora real sobre UTC: la vida útil pasa a medirse contra el calendario de quien tiene la caja delante. La frontera se mueve como máximo un día y solo para centros con zona capturada. | 🟠 Media | ⬜ Pendiente |
-| 5 | El agregado nacional declara su día | Sigue en UTC porque no hay otro posible, y la pantalla lo dice en vez de dejar que se lea como el día local. Un número que no admite su unidad es un número que alguien va a citar mal. | 🟢 Baja | ⬜ Pendiente |
-| 6 | Pruebas de la frontera | Un centro en `America/Monterrey`, una captura a las 19:00 locales, y la afirmación de que cae en el día local y no en el siguiente. Con instante fijo: con el reloj real la prueba solo fallaría durante las horas en que los dos días diferen. | 🟠 Media | ⬜ Pendiente |
+| 1 | Columna `timezone` en `Center` | Nombre IANA (`America/Monterrey`), nullable con `UTC` como comportamiento por omisión mientras esté vacía. Se valida contra `zoneinfo` al escribir: un nombre inventado tiene que fallar en el formulario y no meses después en una consulta. Migración reversible. | 🟢 Baja | ✅ Done |
+| 2 | Captura y sugerencia en el alta del centro | Campo en el formulario de la administración nacional, junto a país y estado, que es de donde ya salen los otros datos del centro. Pre-llenado con la zona del navegador; la lista se acota por `country_code`. | 🟠 Media | ✅ Done |
+| 3 | Los reportes cortan en la zona del centro | `_resolve_dates` y los límites del repositorio dejan de asumir UTC y usan la zona del centro consultado. Sin depender del dialecto, por lo de arriba. Un centro sin zona sigue en UTC, así que nada cambia hasta que alguien la capture. | 🔴 Alta | ✅ Done |
+| 4 | La fecha de captura usa la zona del centro | `_capture_date()` recibe el centro. Es una mejora real sobre UTC: la vida útil pasa a medirse contra el calendario de quien tiene la caja delante. La frontera se mueve como máximo un día y solo para centros con zona capturada. | 🟠 Media | ✅ Done |
+| 5 | El agregado nacional declara su día | Sigue en UTC porque no hay otro posible, y la pantalla lo dice en vez de dejar que se lea como el día local. Un número que no admite su unidad es un número que alguien va a citar mal. | 🟢 Baja | ✅ Done |
+| 6 | Pruebas de la frontera | Un centro en `America/Monterrey`, una captura a las 19:00 locales, y la afirmación de que cae en el día local y no en el siguiente. Con instante fijo: con el reloj real la prueba solo fallaría durante las horas en que los dos días diferen. | 🟠 Media | ✅ Done |
 
 ---
 
@@ -102,3 +107,39 @@ reportes viejos se recalculan con la nueva y nadie guarda cuál se usó entonces
 Es aceptable porque la diferencia es de horas en una frontera de día, y llevar
 el historial costaría más de lo que corrige. Queda escrito para que sea una
 decisión y no un descuido.
+
+---
+
+## Cómo quedó (2026-10-13)
+
+- **Columna y validación.** `centers.timezone` (migración `048`), validada contra
+  `zoneinfo` en `CenterCreate`/`CenterUpdate`. El paquete `tzdata` va en
+  `requirements.txt`: la imagen `python:3.12-slim` no trae la base de zonas, y
+  de él sale también `zone.tab` para acotar la lista por país.
+- **Alta y edición.** `GET /v1/centers/timezones?country_code=` (solo
+  administración nacional) da las zonas del país. El formulario sugiere la del
+  navegador **solo si pertenece al país elegido**: una administración en
+  Monterrey dando de alta un centro en Tampa no debe dejar Monterrey sin darse
+  cuenta. La pantalla de centros ganó edición, que no tenía: el centro de un
+  auto-registro aprobado nacía sin razón social, identificación fiscal ni zona,
+  y no había dónde completarlas. Un país con un solo huso (Venezuela, Colombia)
+  la recibe sola al crear o aprobar el centro; uno con varios queda en UTC hasta
+  que alguien la elija, porque adivinar sería peor.
+- **Reportes.** Un reporte acotado a un centro corta los días en la zona del
+  centro; el agregado nacional sigue en UTC. Las fronteras se calculan en Python
+  (`app/utils/center_time.py`) y la gráfica de actividad agrupa por día en
+  Python, no con `func.date`: la versión SQL con zona no existe en SQLite y las
+  pruebas dejarían de vigilar la frontera. `ReportSummary.timezone` declara la
+  zona usada y la pantalla la enseña. La exportación CSV usa la misma zona para
+  la ventana y para las horas que imprime.
+- **Captura.** `_capture_date()` recibe la zona del centro, que sale de la base,
+  nunca del dispositivo.
+- **Pruebas.** `tests/test_center_time.py` y
+  `tests/tenant/test_center_timezone_reports.py`, con instantes fijos: una caja
+  de las 20:30 en Tampa cuenta en su día, el agregado nacional la ve en el día
+  UTC, un centro sin zona no cambia, y un medicamento con caducidad a 365 días
+  exactos del día local se acepta en Tampa y se rechaza con UTC.
+
+**Acción pendiente fuera del código:** capturar la zona del centro de Tampa (y
+la de los centros mexicanos existentes) desde *Centros → Editar* después del
+despliegue. Mientras no se capture, ese centro sigue en UTC.

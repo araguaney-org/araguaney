@@ -117,6 +117,10 @@ export interface Center {
   contact_phone: string | null
   country_code: string | null
   state_name: string | null
+  legal_name?: string | null
+  tax_id?: string | null
+  /** Zona IANA donde se corta el día del centro (Fase 27). `null` = UTC. */
+  timezone?: string | null
   is_active: boolean
   created_at: string
 }
