@@ -21,6 +21,10 @@ class Center(Base):
     legal_name = Column(String, nullable=True)
     tax_id = Column(String, nullable=True)
     state_name = Column(String, nullable=True)
+    # Zona IANA del centro (Fase 27): dónde se corta su día en reportes y en la
+    # fecha de captura. Vacía = UTC, el comportamiento previo a la fase. Se
+    # valida contra zoneinfo al escribir (`app.utils.center_time`).
+    timezone = Column(String(64), nullable=True)
     is_active = Column(Boolean, nullable=False, server_default="true")
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updated_at = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())

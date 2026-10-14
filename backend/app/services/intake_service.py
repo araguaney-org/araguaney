@@ -1,5 +1,5 @@
 import secrets
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timezone, tzinfo
 from typing import TYPE_CHECKING
 from uuid import UUID
 
@@ -14,6 +14,7 @@ from app.models.events import BoxEvent
 from app.models.intake import Intake
 from app.models.risk_review import RiskReview
 from app.repositories.campaign_repository import CampaignRepository
+from app.repositories.center_repository import CenterRepository
 from app.legal import CURRENT_DONATION_TERMS_VERSION
 from app.repositories.donor_repository import DonorRepository
 from app.repositories.intake_repository import IntakeRepository
@@ -25,6 +26,7 @@ from app.services import box_code_service
 from app.services.base import BaseService
 from app.services.validation_service import validate_box
 from app.utils.gtin import normalize as normalize_gtin, validate as validate_gtin
+from app.utils.center_time import local_date, zone_for
 from app.utils.errors import api_error
 from app.utils.volume import exceeds_volume_threshold
 
@@ -33,20 +35,25 @@ def _box_code() -> str:
     return f"BX-{secrets.token_urlsafe(6).upper()}"
 
 
-def _capture_date() -> date:
-    """El día de la captura, en UTC.
+def _now() -> datetime:
+    """El reloj de la captura, aparte para que una prueba pueda fijarlo."""
+    return datetime.now(timezone.utc)
+
+
+def _capture_date(tz: tzinfo = timezone.utc) -> date:
+    """El día de la captura en el calendario del centro (Fase 27).
 
     Alimenta la regla de vida útil (`validate_box`), que resta esta fecha de una
-    caducidad impresa en la caja para decidir si se acepta. Antes salía de
-    `date.today()`, o sea del reloj del proceso: la misma caja podía aceptarse o
-    rechazarse según dónde corriera el servidor, y eso no puede depender de ahí.
+    caducidad impresa en la caja para decidir si se acepta. La caducidad es un
+    día de calendario, así que se compara contra el día de quien tiene la caja
+    delante: en Tampa, una captura a las 21:00 es de ese día y no del siguiente,
+    que es lo que decía UTC.
 
-    UTC y no la hora local del centro porque es lo mismo que guardan las marcas
-    de tiempo de todo lo demás. La diferencia máxima es de un día contra el
-    calendario de quien captura, y cae del lado estricto: cuenta un día menos de
-    vida útil, nunca uno de más.
+    La zona sale del centro en el backend, nunca del dispositivo: si viniera del
+    cliente, cambiar la hora del teléfono movería la frontera de aceptación. Un
+    centro sin zona capturada sigue en UTC, el comportamiento previo a la fase.
     """
-    return datetime.now(timezone.utc).date()
+    return local_date(_now(), tz)
 
 
 class IntakeService(BaseService):
@@ -88,7 +95,8 @@ class IntakeService(BaseService):
 
         pt_repo = ProductTypeRepository(self.db)
         intake_repo = IntakeRepository(self.db)
-        capture_date = _capture_date()
+        center = CenterRepository(self.db).find_by_id(center_id)
+        capture_date = _capture_date(zone_for(center.timezone if center else None))
 
         # Validate all product types exist before writing anything
         product_types = {}

@@ -207,14 +207,29 @@ def generate_transfer_manifest_pdf(db: Session, transfer_id: str) -> tuple[bytes
 
 
 def generate_report_export_csv(
-    db: Session, campaign_id: str, center_id: str | None, start: str, end: str
+    db: Session,
+    campaign_id: str,
+    center_id: str | None,
+    start: str,
+    end: str,
+    timezone_name: str | None = None,
 ) -> tuple[bytes, str, str]:
     import csv
     import io as io_mod
     from app.repositories.report_repository import ReportRepository
 
     scope = UUID(center_id) if center_id else None
-    rows = ReportRepository(db).export_rows(UUID(campaign_id), scope, date.fromisoformat(start), date.fromisoformat(end))
+    from app.utils.center_time import zone_for
+
+    # La zona viaja en el trabajo: es la misma con que el endpoint resolvió la
+    # ventana. Un trabajo encolado antes de la Fase 27 no la trae y sigue en UTC.
+    rows = ReportRepository(db).export_rows(
+        UUID(campaign_id),
+        scope,
+        date.fromisoformat(start),
+        date.fromisoformat(end),
+        zone_for(timezone_name),
+    )
 
     output = io_mod.StringIO()
     if rows:
@@ -337,7 +352,7 @@ _GENERATORS: dict[str, Callable[[Session, dict], tuple[bytes, str, str]]] = {
     "PALLET_LABEL_PDF": lambda db, p: generate_pallet_label_pdf(db, p["pallet_id"], p.get("lang")),
     "TRANSFER_MANIFEST_PDF": lambda db, p: generate_transfer_manifest_pdf(db, p["transfer_id"]),
     "REPORT_EXPORT_CSV": lambda db, p: generate_report_export_csv(
-        db, p["campaign_id"], p["center_id"], p["start"], p["end"]
+        db, p["campaign_id"], p["center_id"], p["start"], p["end"], p.get("timezone")
     ),
     "SHIPMENT_DECLARATION_XLSX": lambda db, p: generate_shipment_declaration_xlsx(db, p["shipment_id"]),
     "SHIPMENT_DECLARATION_JSON": lambda db, p: generate_shipment_declaration_json(db, p["shipment_id"]),

@@ -6,8 +6,9 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.dependencies import require_national_admin
 from app.models.user import User
-from app.schemas.center import CenterCreate, CenterOut, CenterUpdate
+from app.schemas.center import CenterCreate, CenterOut, CenterUpdate, TimezoneOptions
 from app.services.center_service import CenterService
+from app.utils.center_time import timezones_for_country
 from app.utils.rate_limit import limiter
 
 router = APIRouter(prefix="/centers", tags=["centers"])
@@ -27,6 +28,21 @@ def list_centers(
     # back to "all countries" for admins with no country_code set yet.
     effective_country = country_code if country_code is not None else current_user.country_code
     return CenterService(db).list_centers(active_only=active_only, country_code=effective_country)
+
+
+@router.get("/timezones", response_model=TimezoneOptions)
+@limiter.limit("60/minute")
+def list_timezones(
+    request: Request,
+    country_code: str | None = Query(None, min_length=2, max_length=2),
+    _: User = Depends(require_national_admin),
+):
+    """Zonas IANA de un país (todas, sin país) para el formulario del centro.
+
+    Va antes de `/{center_id}`: si no, la ruta la tomaría como un id.
+    """
+    code = country_code.upper() if country_code else None
+    return TimezoneOptions(country_code=code, timezones=timezones_for_country(code))
 
 
 @router.get("/{center_id}", response_model=CenterOut)

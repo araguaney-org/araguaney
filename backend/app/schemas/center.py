@@ -5,6 +5,7 @@ from uuid import UUID
 from pydantic import field_validator
 
 from app.schemas._base import StrictModel, StrictORMModel
+from app.utils.center_time import validate_timezone
 
 _COUNTRY_CODE_RE = re.compile(r"^[A-Z]{2}$")
 
@@ -28,11 +29,18 @@ class CenterCreate(StrictModel):
     # un EIN no se parecen en nada.
     legal_name: str | None = None
     tax_id: str | None = None
+    # Zona IANA donde se corta el día del centro (Fase 27). Vacía = UTC.
+    timezone: str | None = None
 
     @field_validator("country_code")
     @classmethod
     def validate_country_code(cls, v: str | None) -> str | None:
         return _validate_country_code(v)
+
+    @field_validator("timezone")
+    @classmethod
+    def validate_timezone(cls, v: str | None) -> str | None:
+        return validate_timezone(v)
 
 
 class CenterUpdate(StrictModel):
@@ -49,11 +57,18 @@ class CenterUpdate(StrictModel):
     # un EIN no se parecen en nada.
     legal_name: str | None = None
     tax_id: str | None = None
+    # Zona IANA donde se corta el día del centro (Fase 27). Vacía = UTC.
+    timezone: str | None = None
 
     @field_validator("country_code")
     @classmethod
     def validate_country_code(cls, v: str | None) -> str | None:
         return _validate_country_code(v)
+
+    @field_validator("timezone")
+    @classmethod
+    def validate_timezone(cls, v: str | None) -> str | None:
+        return validate_timezone(v)
 
 
 class CenterOut(StrictORMModel):
@@ -67,5 +82,13 @@ class CenterOut(StrictORMModel):
     state_name: str | None
     legal_name: str | None = None
     tax_id: str | None = None
+    timezone: str | None = None
     is_active: bool
     created_at: datetime
+
+
+class TimezoneOptions(StrictModel):
+    """Zonas para elegir al dar de alta un centro, acotadas por país."""
+
+    country_code: str | None
+    timezones: list[str]

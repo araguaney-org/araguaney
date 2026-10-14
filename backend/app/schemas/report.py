@@ -12,6 +12,10 @@ class ReportSummary(StrictModel):
     total_shipments: int
     active_centers: int
     rejection_rate: float
+    # Zona en que se cortaron los días de la ventana (Fase 27): la del centro
+    # en un reporte acotado a un centro, `UTC` en el agregado nacional. Un
+    # número que no admite su unidad es un número que alguien va a citar mal.
+    timezone: str = "UTC"
 
 
 class ShrinkageSummary(StrictModel):

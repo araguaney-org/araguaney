@@ -1,4 +1,4 @@
-"""The day a report cuts on is UTC, and the code says so.
+"""A center without a timezone still cuts its day in UTC.
 
 Both `_resolve_dates` and the intake capture date used `date.today()`, which
 reads the process's local clock. Production happens to run UTC — the
@@ -6,10 +6,9 @@ reads the process's local clock. Production happens to run UTC — the
 accident rather than by decision, and the accident held only while nobody set
 `TZ`.
 
-What it did break, every day, is the suite: `report_repository` interprets the
-boundaries as UTC days (`_start_dt`/`_end_dt`), so on any machine west of
-Greenwich the default window ended before the rows the fixtures had just
-written. Two permanently red tests teach people to ignore red tests.
+Phase 27 moved the day to the center's own calendar, but only for centers that
+have a zone recorded. These tests pin the fallback: with no zone, nothing
+changes from before the phase.
 """
 
 from datetime import date, datetime, timezone
@@ -19,8 +18,8 @@ from app.services import intake_service
 
 
 def test_the_default_window_ends_on_the_utc_day(monkeypatch):
-    """01:00 UTC on the 5th is still the 4th in Mexico City. The window has to
-    end on the 5th, because that is the day the stored timestamps are in."""
+    """01:00 UTC on the 5th is still the 4th in Mexico City. Without a center
+    zone the window ends on the 5th, the day the stored timestamps are in."""
     monkeypatch.setattr(
         report, "_now", lambda: datetime(2026, 9, 5, 1, 0, tzinfo=timezone.utc)
     )
@@ -37,8 +36,11 @@ def test_the_reports_clock_is_utc():
     assert report._now().utcoffset() == timezone.utc.utcoffset(None)
 
 
-def test_the_capture_date_is_the_utc_day():
+def test_the_capture_date_without_a_zone_is_the_utc_day(monkeypatch):
     """The shelf-life rule measures from the capture date against expiry dates
     that are plain calendar days. Which day that is cannot depend on where the
     server happens to be running."""
-    assert intake_service._capture_date() == datetime.now(timezone.utc).date()
+    monkeypatch.setattr(
+        intake_service, "_now", lambda: datetime(2026, 9, 5, 1, 0, tzinfo=timezone.utc)
+    )
+    assert intake_service._capture_date() == date(2026, 9, 5)

@@ -486,7 +486,14 @@
       "field_legal_name_placeholder": "The organization's legal name",
       "field_tax_id": "Tax identification",
       "field_tax_id_placeholder": "Tax ID as used in your country",
-      "field_tax_id_hint": "Used as-is on the goods declaration of your shipments. Araguaney neither validates nor interprets it: it just prints it."
+      "field_tax_id_hint": "Used as-is on the goods declaration of your shipments. Araguaney neither validates nor interprets it: it just prints it.",
+      "form_title_edit": "Edit center",
+      "edit": "Edit",
+      "field_timezone": "Time zone",
+      "select_timezone": "No time zone (UTC)",
+      "field_timezone_hint": "Sets where the center's day ends: in its reports and in the capture date that shelf life is measured from. Without one, the day ends in UTC.",
+      "timezone_load_error": "Could not load the list of time zones. Try again.",
+      "timezone_missing": "No time zone: its day ends in UTC"
     },
     "reports": {
       "title": "Reports",
@@ -537,7 +544,10 @@
       "country_boxes": "boxes",
       "tooltip_boxes": "{count} boxes",
       "kpi_shrinkage": "Shrinkage at destination",
-      "shrinkage_sub": "{missing} missing · {damaged} damaged · {retained} retained"
+      "shrinkage_sub": "{missing} missing · {damaged} damaged · {retained} retained",
+      "timezone_note": "Days in {zone} time.",
+      "timezone_note_utc": "Days in UTC: the aggregate spans centers in different time zones and has no local day of its own.",
+      "timezone_note_center_utc": "Days in UTC: this center has no time zone recorded yet."
     },
     "scan": {
       "title": "Scan QR",

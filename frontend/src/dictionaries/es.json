@@ -486,7 +486,14 @@
       "field_legal_name_placeholder": "Nombre legal de la organización",
       "field_tax_id": "Identificación fiscal",
       "field_tax_id_placeholder": "RFC, RIF, NIT… según tu país",
-      "field_tax_id_hint": "Se usa tal cual en la declaración de mercancías de tus envíos. Araguaney no lo valida ni lo interpreta: solo lo imprime."
+      "field_tax_id_hint": "Se usa tal cual en la declaración de mercancías de tus envíos. Araguaney no lo valida ni lo interpreta: solo lo imprime.",
+      "form_title_edit": "Editar centro",
+      "edit": "Editar",
+      "field_timezone": "Zona horaria",
+      "select_timezone": "Sin zona (UTC)",
+      "field_timezone_hint": "Define dónde termina el día del centro: en sus reportes y en la fecha de captura con la que se mide la caducidad. Sin zona, el día se corta en UTC.",
+      "timezone_load_error": "No se pudo cargar la lista de zonas. Intenta de nuevo.",
+      "timezone_missing": "Sin zona horaria: su día se corta en UTC"
     },
     "reports": {
       "title": "Reportes",
@@ -537,7 +544,10 @@
       "country_boxes": "cajas",
       "tooltip_boxes": "{count} cajas",
       "kpi_shrinkage": "Merma en destino",
-      "shrinkage_sub": "{missing} faltantes · {damaged} dañadas · {retained} retenidas"
+      "shrinkage_sub": "{missing} faltantes · {damaged} dañadas · {retained} retenidas",
+      "timezone_note": "Días en hora de {zone}.",
+      "timezone_note_utc": "Días en UTC: el agregado reúne centros en husos distintos y no tiene un día local propio.",
+      "timezone_note_center_utc": "Días en UTC: este centro todavía no tiene zona horaria registrada."
     },
     "scan": {
       "title": "Escanear QR",

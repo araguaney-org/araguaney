@@ -19,6 +19,7 @@ from app.repositories.user_repository import UserRepository
 from app.schemas.center_application import CenterApplicationCreate
 from app.services.auth_service import AuthService
 from app.services.base import BaseService
+from app.utils.center_time import single_timezone_for_country
 from app.utils.errors import api_error
 
 
@@ -174,6 +175,9 @@ class CenterApplicationService(BaseService):
             contact_phone=application.contact_phone,
             country_code=application.country_code,
             state_name=application.state_name,
+            # Si el país tiene un solo huso no hay nada que preguntar; si tiene
+            # varios queda vacía (UTC) hasta que la administración la capture.
+            timezone=single_timezone_for_country(application.country_code),
         ))
 
         # 2. Invite the applicant as its coordinator (mirror of invite_user).

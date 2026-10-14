@@ -296,6 +296,10 @@ tiene un solo `batch` y una sola `expiry_date`. Si llega mezcla → se divide en
 
 **Validación de medicamentos** (WHO Guidelines for Medicine Donations, 3ª ed.):
 1. Vida útil restante **≥ 365 días** a la fecha de captura → si no, `status = REJECTED`.
+   La fecha de captura es el día **del centro** (`centers.timezone`, Fase 27),
+   calculado en el backend y nunca con la zona del dispositivo. Un centro sin
+   zona registrada usa UTC. Los reportes de un centro cortan el día en esa misma
+   zona; el agregado nacional sigue en UTC y lo declara.
 2. Campos obligatorios para sellar: `inn_name`, `batch`, `form`, `strength`, `expiry_date`.
 3. `ProductType.is_controlled = true` → **bloqueado** en intake.
 

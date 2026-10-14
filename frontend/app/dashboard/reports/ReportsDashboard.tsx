@@ -35,6 +35,8 @@ interface Summary {
   total_shipments: number
   active_centers: number
   rejection_rate: number
+  /** Zona en que se cortaron los días (Fase 27): la del centro, o `UTC`. */
+  timezone?: string
 }
 
 /** Merma de la campaña. Se consulta sin rango de fechas: un envío se recibe
@@ -289,6 +291,16 @@ export default function ReportsDashboard({ campaigns, defaultCampaignId, centerR
 
       {loading && (
         <div className="text-center text-xs text-fnt py-4">{t.loading_data}</div>
+      )}
+
+      {summary?.timezone && (
+        <p className="text-[11px] text-fnt">
+          {summary.timezone !== "UTC"
+            ? t.timezone_note.replace("{zone}", summary.timezone.replaceAll("_", " "))
+            : isNational
+              ? t.timezone_note_utc
+              : t.timezone_note_center_utc}
+        </p>
       )}
 
       {/* KPI Cards */}
