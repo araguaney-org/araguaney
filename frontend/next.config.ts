@@ -1,5 +1,5 @@
 import type { NextConfig } from "next"
-import { withSentryConfig } from "@sentry/nextjs"
+import { withSentryConfig } from "@sentry/nextjs/config"
 import { legacyDomainRedirects } from "./src/lib/legacy-domains"
 
 // Las fichas publicas de QR incrustan la imagen directo del backend
@@ -110,12 +110,9 @@ if (process.env.SENTRY_AUTH_TOKEN && !(process.env.SENTRY_ORG && process.env.SEN
 export default withSentryConfig(nextConfig, {
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
-  // Los eventos del navegador salen por una ruta de este dominio en vez de ir
-  // directo a sentry.io. Las listas de los bloqueadores de anuncios incluyen el
-  // dominio de ingesta, así que sin esto se pierden los errores de quien navega
-  // con bloqueador — y no se pierden al azar: desaparece justo ese segmento,
-  // dejando una foto sesgada que parece completa.
-  tunnelRoute: "/monitoring",
+  // El túnel de eventos ya no se declara aquí desde @sentry/nextjs 11: lo
+  // activan el navegador y el servidor en su `Sentry.init`
+  // (ver src/lib/sentry-tunnel.ts).
   silent: !process.env.CI,
   // Applies to both webpack and turbopack builds.
   widenClientFileUpload: true,
