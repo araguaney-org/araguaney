@@ -8,10 +8,14 @@
 import * as Sentry from "@sentry/nextjs"
 
 import { sentryEnvironment } from "@/lib/sentry-environment"
+import { SENTRY_TUNNEL_PATH } from "@/lib/sentry-tunnel"
 
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   environment: sentryEnvironment(),
+  // Envía por el túnel del mismo dominio para esquivar los bloqueadores de
+  // anuncios (ver src/lib/sentry-tunnel.ts).
+  tunnel: { path: SENTRY_TUNNEL_PATH },
   tracesSampleRate: 0.2,
   // Solo se graba la sesión cuando hubo error. Grabar de continuo consumiría la
   // cuota gratuita en días y casi todo lo grabado sería tráfico sano.
