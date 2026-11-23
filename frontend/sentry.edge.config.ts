@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/nextjs"
 
 import { sentryEnvironment } from "@/lib/sentry-environment"
+import { SENTRY_PRIVACY_OPTIONS } from "@/lib/sentry-privacy"
 
 Sentry.init({
   // El del servidor puede ser distinto al del navegador; si no se define,
@@ -8,4 +9,6 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN ?? process.env.NEXT_PUBLIC_SENTRY_DSN,
   environment: sentryEnvironment(),
   tracesSampleRate: 0.2,
+  // Qué datos salen y cuáles nunca (ver src/lib/sentry-privacy.ts).
+  ...SENTRY_PRIVACY_OPTIONS,
 })

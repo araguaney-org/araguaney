@@ -23,6 +23,7 @@ These are active out of the box — no configuration needed beyond env vars.
 | CORS | `main.py` | Locked to `FRONTEND_URL` env var |
 | ProxyHeadersMiddleware | `main.py` | Trusts proxy headers from `TRUSTED_PROXY_IPS` |
 | Sentry (optional) | `utils/sentry_setup.py` | Disabled if `SENTRY_DSN` not set. `data_collection` sends no user info, cookies, request bodies, SQL values, AI inputs/outputs, job arguments or stack-frame variables, and only allowlisted request headers. `tests/test_sentry_setup.py` sends a failing request carrying personal data and asserts none of it leaves |
+| Sentry, frontend (optional) | `src/lib/sentry-privacy.ts` | Browser, server and edge share one `dataCollection` policy (no user info, cookies, bodies, query params, SQL values, AI data or stack-frame variables; allowlisted request headers only). Every URL is redacted before it leaves: the donation management token in `/donacion/{token}` is replaced and query strings are dropped. Session Replay masks all text, inputs and media, and does not record pages whose address carries a credential |
 | Generic 500 responses | `main.py` | No stack traces exposed to clients |
 | Slack alert on 500 | `main.py` | Posts to the channel in `SLACK_ALERT_CHANNEL`; silent when unset |
 | Email verification required | `routers/auth.py` | Login blocked until email verified |
