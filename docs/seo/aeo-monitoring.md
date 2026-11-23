@@ -147,3 +147,30 @@ Append one dated block per month here (or split into `aeo-results.md` once this
 file grows). Newest first.
 
 <!-- Add monthly results below this line. -->
+
+## 2026-11 — Google Search Console (first measurement after the move to `.org`)
+
+Measured 2026-11-23 over the last 28 days (2026-10-25 → 2026-11-21). Parts 1
+and 2 were not run this month.
+
+| | `araguaney.org` (domain property) | `www.araguaney.lat` (URL prefix) |
+|---|---|---|
+| Clicks | 0 | 6 |
+| Impressions | 64 | 97 |
+| Average position | 9.2 | 6.7 |
+| Indexed pages | 16 | 10 (being replaced) |
+
+- **`.lat` still out-earns `.org`.** Its 301s to `.org` are correct (path and
+  query preserved); Google has simply not swapped every result yet. Clicks on
+  `.lat` results land on `.org`.
+- **Where `.org` impressions come from:** 48 of 64 are the English guide on
+  organizing a collection center. Countries: Brazil 23, Russia 9, Argentina 8,
+  Venezuela 7; Mexico does not appear yet.
+- **Indexing:** the guides submitted on 2026-10-08 (QR inventory, customs,
+  organizing a center) are indexed. 22 sitemap URLs were *Discovered – currently
+  not indexed* and never crawled, nearly all with no referring page. Cause: weak
+  internal linking (fixed by Phase 17 task 29). Indexing was requested for 11 of
+  them the same day; the daily quota stopped the rest.
+- **Next measurement:** around 2026-12-23. Compare the *Discovered – currently
+  not indexed* count, `.org` vs `.lat` impressions, and whether Brazil and the
+  US show enough volume to decide Phase 17 tasks 25 and 28.

@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import { footerResourceLinks } from "@/lib/footer-links"
 import type { Dictionary, Locale } from "@/lib/i18n"
 import { localizedPath, resolveLocale } from "@/lib/routes"
 import { SOURCE_REPO_URL } from "@/lib/seo"
@@ -77,6 +78,19 @@ export default function HomeFooter({ dict, locale = "es" }: Props) {
           cap it pushed the document past 390px (horizontal overflow → the
           browser zooms the whole page out). */}
       <div className="flex flex-col gap-2 md:items-end min-w-0 max-w-full">
+        {/* Páginas de contenido, ver src/lib/footer-links.ts. Va en su propia
+            fila y siempre puede partirse en varias líneas: la de abajo no se
+            parte en escritorio y no admite más enlaces sin desbordar. */}
+        <nav
+          aria-label={locale === "en" ? "Resources" : "Recursos"}
+          className="flex flex-wrap items-center gap-x-4 gap-y-2 md:justify-end"
+        >
+          {footerResourceLinks(locale).map((link) => (
+            <Link key={link.href} href={link.href} style={LINK_STYLE}>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
         <div
           className="md:max-w-[420px]"
           style={{ fontSize: 12, color: "#A89E8C", lineHeight: 1.55 }}
