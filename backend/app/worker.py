@@ -38,11 +38,9 @@ logger = logging.getLogger(__name__)
 if settings.sentry_dsn:
     import sentry_sdk
 
-    sentry_sdk.init(
-        dsn=settings.sentry_dsn,
-        environment=settings.sentry_environment,
-        traces_sample_rate=0.1,
-    )
+    from app.utils.sentry_setup import worker_sentry_options
+
+    sentry_sdk.init(**worker_sentry_options(settings.sentry_dsn, settings.sentry_environment))
 
 
 # ── Alertas de fallo (Fase 24) ────────────────────────────────────────────────

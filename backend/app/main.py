@@ -6,8 +6,6 @@ from contextlib import asynccontextmanager
 
 import jwt
 import sentry_sdk
-from sentry_sdk.integrations.fastapi import FastApiIntegration
-from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from sqlalchemy.orm import Session
@@ -24,6 +22,7 @@ from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 from app.config import settings
 from app.utils.cloudflare import get_client_ip
 from app.utils.rate_limit import limiter
+from app.utils.sentry_setup import api_sentry_options
 
 # ── Routers ────────────────────────────────────────────────────────────────────
 from app.routers import auth, box, campaign, catalog, center, client, dashboard, device_token, exports, intake, messaging, pallet, product_type, report, shipment, transfer, users, studio, requests as requests_router, center_application, donation, email_failures, resend_webhook, risk_review, incident
@@ -149,13 +148,7 @@ class CloudflareOnlyMiddleware(BaseHTTPMiddleware):
 # ── Sentry ─────────────────────────────────────────────────────────────────────
 
 if settings.sentry_dsn:
-    sentry_sdk.init(
-        dsn=settings.sentry_dsn,
-        environment=settings.sentry_environment,
-        integrations=[FastApiIntegration(), SqlalchemyIntegration()],
-        traces_sample_rate=0.1,
-        send_default_pii=False,
-    )
+    sentry_sdk.init(**api_sentry_options(settings.sentry_dsn, settings.sentry_environment))
 
 # ── Startup guard ──────────────────────────────────────────────────────────────
 
