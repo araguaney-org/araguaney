@@ -20,11 +20,11 @@ user-agents==2.2.0
 slowapi==0.1.10
 jinja2==3.1.6
 alembic==1.20.1
-# Capped below 3: 3.0 rejects `send_default_pii` with a TypeError, and init runs
-# at import whenever SENTRY_DSN is set, so the API would not start. The 3.x
-# move is its own change; tests/test_sentry_setup.py fails on any SDK that
-# rejects our options.
-sentry-sdk[fastapi]>=2.75.0,<3
+# 3.x replaced send_default_pii with data_collection; the options live in
+# app/utils/sentry_setup.py and tests/test_sentry_setup.py checks both that the
+# installed SDK accepts them and that a failing request sends no personal data.
+# 3.0 dropped the [fastapi] extra: the integration ships in the base package.
+sentry-sdk>=3.0.0,<4
 # IANA zone database for zoneinfo. The python:3.12-slim image ships no
 # /usr/share/zoneinfo, and the center's timezone (phase 27) reads zone.tab from
 # this package to list a country's zones.

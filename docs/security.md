@@ -22,7 +22,7 @@ These are active out of the box — no configuration needed beyond env vars.
 | Security headers middleware | `main.py` | `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `X-XSS-Protection` |
 | CORS | `main.py` | Locked to `FRONTEND_URL` env var |
 | ProxyHeadersMiddleware | `main.py` | Trusts proxy headers from `TRUSTED_PROXY_IPS` |
-| Sentry (optional) | `main.py` | Disabled if `SENTRY_DSN` not set; `send_default_pii=False` |
+| Sentry (optional) | `utils/sentry_setup.py` | Disabled if `SENTRY_DSN` not set. `data_collection` sends no user info, cookies, request bodies, SQL values, AI inputs/outputs, job arguments or stack-frame variables, and only allowlisted request headers. `tests/test_sentry_setup.py` sends a failing request carrying personal data and asserts none of it leaves |
 | Generic 500 responses | `main.py` | No stack traces exposed to clients |
 | Slack alert on 500 | `main.py` | Posts to the channel in `SLACK_ALERT_CHANNEL`; silent when unset |
 | Email verification required | `routers/auth.py` | Login blocked until email verified |
