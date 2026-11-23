@@ -128,7 +128,7 @@ una reparación conocida.
 | # | Tarea | Descripción | Complejidad | Estado |
 |---|---|---|---|---|
 | 19 | Retirar `api.araguaney.lat` | Solo cuando ninguna versión soportada de la app lo use (tarea 18). Quitarlo de Railway y de la zona vieja, y dejar `FRONTEND_URL` y `EMAIL_OWNED_DOMAINS` solo con `.org`. | 🟢 Baja | ⬜ Pendiente |
-| 20 | Qué pasa con `araguaney.lat` | Recomendado: **mantenerlo renovado y redirigiendo**. Si caduca, un tercero puede registrarlo y recibir el tráfico de cualquier enlace viejo bajo nuestro nombre. Decidir además si su zona se muda a la cuenta nueva para tener todo en un solo lugar. | 🟢 Baja | ⬜ Pendiente |
+| 20 | Qué pasa con `araguaney.lat` | Recomendado: **mantenerlo renovado y redirigiendo**. Si caduca, un tercero puede registrarlo y recibir el tráfico de cualquier enlace viejo bajo nuestro nombre. Decidir además si su zona se muda a la cuenta nueva para tener todo en un solo lugar. Dato de la primera medición (2026-11-23, 28 días): `.lat` todavía trae más tráfico de Google que `.org` (6 clics y 97 impresiones contra 0 y 64), porque Google aún no reemplaza todos sus resultados; las redirecciones están bien. | 🟢 Baja | ⬜ Pendiente |
 | 21 | Documentación | Hecho el 2026-10-02 en los documentos que describen el sistema actual: mantenimiento SEO, observabilidad, bitácora de Galileo y las fuentes de `docs/seo/`. Las fases cerradas, los specs y los planes ya ejecutados conservan `.lat` a propósito: registran lo que se decidió en su momento, y reescribirlos borraría ese contexto. El `CLAUDE.md` no nombra el dominio. | 🟢 Baja | ✅ Done |
 
 ### Bloque G — Google y servicios de terceros

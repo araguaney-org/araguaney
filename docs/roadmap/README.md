@@ -3,8 +3,8 @@
 ## Progreso general
 
 ```mermaid
-pie title Tareas completadas (529 tareas)
-    "Listas" : 494
+pie title Tareas completadas (530 tareas)
+    "Listas" : 495
     "Pendientes" : 24
     "Canceladas" : 11
 ```
@@ -28,7 +28,7 @@ pie title Tareas completadas (529 tareas)
 | 14 | [Auto-registro de centros con aprobación](phase-14-center-self-registration.md) | 17 | 0 | 0 | ✅ 100% |
 | 15 | [Deliverability de emails + aviso de solicitudes](phase-15-email-deliverability.md) | 15 | 0 | 0 | ✅ 100% |
 | 16 | [Rediseño de plantillas de email con marca](phase-16-email-brand-redesign.md) | 10 | 0 | 0 | ✅ 100% |
-| 17 | [AEO/GEO + expansión de keywords](phase-17-aeo-keyword-expansion.md) | 21 | 7 | 0 | 🟡 75% |
+| 17 | [AEO/GEO + expansión de keywords](phase-17-aeo-keyword-expansion.md) | 22 | 7 | 0 | 🟡 76% |
 | 18 | [Pre-registro de donaciones por el donante](phase-18-donor-preregistration.md) | 23 | 0 | 0 | ✅ 100% |
 | 19 | [Identidad estructurada del donante en el intake](phase-19-structured-donor-identity.md) | 9 | 0 | 0 | ✅ 100% |
 | 20 | [Prevención de riesgos: responsabilidad y anti-lavado en especie](phase-20-risk-prevention.md) | 6 | 4 | 0 | 🟡 60% |
@@ -42,7 +42,7 @@ pie title Tareas completadas (529 tareas)
 | 28 | [Otro nombre para el mismo producto](phase-28-product-aliases.md) | 6 | 2 | 0 | 🟡 75% |
 | 29 | [De `araguaney.lat` a `araguaney.org`](phase-29-domain-migration.md) | 16 | 8 | 1 | 🟡 67% |
 | 30 | [Aprovechar Project Galileo](phase-30-galileo-hardening.md) | 5 | 1 | 0 | 🟡 83% |
-| **Total** | | **494** | **24** | **11** | **🟡 93%** |
+| **Total** | | **495** | **24** | **11** | **🟡 93%** |
 
 > **Canceladas (11):** la tarea 16 de la Fase 29 (mover el webhook de Resend) no aplica mientras el webhook siga apagado a propósito; el hueco queda en `docs/observability.md`. Las otras diez: el bloque de donativos/pagos de la Fase 13 (Grupo B: entidad receptora,
 > asesoría legal/contable, procesador de pagos, T&C de donación, transparencia) se canceló el
@@ -78,7 +78,7 @@ pie title Tareas completadas (529 tareas)
 >   reales y superar su umbral: el código está listo, la medición no. Diseño en
 >   [su spec](../superpowers/specs/2026-07-29-ai-assisted-capture-design.md).
 > - **2 gated por pago (Fase 4):** spend caps + alertas, requieren plan de pago de infra.
-> - **7 ejecutables (Fase 17):** tasks 25 (portugués y región destino) y 28 (inventario para bancos de alimentos) esperan datos de Search Console de `araguaney.org`; tasks 6 (Wikidata) y 8 (directorios) preparadas en
+> - **7 ejecutables (Fase 17):** tasks 25 (portugués y región destino) y 28 (inventario para bancos de alimentos) tienen su primera medición de Search Console (2026-11-23) sin señal suficiente y se reevalúan con la de diciembre; tasks 6 (Wikidata) y 8 (directorios) preparadas en
 >   [`docs/seo/entity-registration.md`](../seo/entity-registration.md); 17 (video demo, requiere
 >   grabar el video). Las de medición (19 monitoreo de citas en IA, 20 analítica de Bing) quedan
 >   **preparadas** con el instrumento de [`docs/seo/aeo-monitoring.md`](../seo/aeo-monitoring.md)
