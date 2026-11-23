@@ -3,9 +3,9 @@
 ## Progreso general
 
 ```mermaid
-pie title Tareas completadas (532 tareas)
-    "Listas" : 496
-    "Pendientes" : 25
+pie title Tareas completadas (533 tareas)
+    "Listas" : 498
+    "Pendientes" : 24
     "Canceladas" : 11
 ```
 
@@ -35,14 +35,14 @@ pie title Tareas completadas (532 tareas)
 | 21 | [Logística: pesaje, declaración de mercancías y perfiles de paletizado](phase-21-logistics-weighing.md) | 12 | 0 | 0 | ✅ 100% |
 | 22 | [Trazabilidad extendida: avión y destino](phase-22-extended-traceability.md) | 14 | 0 | 0 | ✅ 100% |
 | 23 | [IA asistida: captura, catálogo y necesidades](phase-23-ai-assisted-capture.md) | 11 | 0 | 0 | ✅ 100% |
-| 24 | [Observabilidad: que un fallo silencioso deje de serlo](phase-24-observability.md) | 12 | 1 | 0 | 🟡 92% |
+| 24 | [Observabilidad: que un fallo silencioso deje de serlo](phase-24-observability.md) | 14 | 0 | 0 | ✅ 100% |
 | 25 | [Captura sin conexión: cola local y sincronización diferida](phase-25-offline-capture.md) | 14 | 0 | 0 | ✅ 100% |
 | 26 | [Soporte de backend para el cliente nativo](phase-26-native-client-support.md) | 20 | 0 | 0 | ✅ 100% |
 | 27 | [De quién es el día: zona horaria del centro](phase-27-center-timezone.md) | 6 | 0 | 0 | ✅ 100% |
 | 28 | [Otro nombre para el mismo producto](phase-28-product-aliases.md) | 6 | 2 | 0 | 🟡 75% |
 | 29 | [De `araguaney.lat` a `araguaney.org`](phase-29-domain-migration.md) | 16 | 8 | 1 | 🟡 67% |
 | 30 | [Aprovechar Project Galileo](phase-30-galileo-hardening.md) | 5 | 1 | 0 | 🟡 83% |
-| **Total** | | **496** | **25** | **11** | **🟡 93%** |
+| **Total** | | **498** | **24** | **11** | **🟡 93%** |
 
 > **Canceladas (11):** la tarea 16 de la Fase 29 (mover el webhook de Resend) no aplica mientras el webhook siga apagado a propósito; el hueco queda en `docs/observability.md`. Las otras diez: el bloque de donativos/pagos de la Fase 13 (Grupo B: entidad receptora,
 > asesoría legal/contable, procesador de pagos, T&C de donación, transparencia) se canceló el
