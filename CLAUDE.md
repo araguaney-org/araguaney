@@ -497,19 +497,29 @@ schemas/    → Pydantic I/O models (extend StrictModel or StrictORMModel from s
 
 ### Las pruebas corren sobre SQLite; producción es Postgres
 
-Dieciocho de los archivos de prueba levantan una SQLite en memoria, porque el
-workflow de CI no arranca un Postgres. La aplicación **nunca** habla con SQLite:
-Railway y `docker-compose` son Postgres 16.
+Dieciocho de los archivos de prueba levantan una SQLite en memoria. La
+aplicación **nunca** habla con SQLite: Railway y `docker-compose` son Postgres 16.
 
 La brecha muerde en el SQL que depende del dialecto, y de una forma incómoda:
 el código puede estar bien en producción y la prueba fallar, o —peor— pasar sin
-comprobar nada. Ya pasó dos veces:
+comprobar nada. Ya pasó tres veces:
 
 - `cast(uuid, String)` da la forma con guiones en Postgres y hexadecimal sin
   guiones en SQLite. Un filtro de acceso escrito así funciona en producción y
   queda **sin vigilancia** en las pruebas (`app/services/user_admin_scope.py`).
 - `date_trunc` no existe en SQLite; por eso el panel de gasto de IA agrupa con
   `func.date` y normaliza el resultado en Python (`app/services/ai/usage_report.py`).
+- Al pasar a psycopg 3 (SQLAlchemy 2.1), `SET LOCAL x = :valor` dejó de
+  funcionar: psycopg 3 manda los parámetros aparte y Postgres no los acepta en
+  `SET`. Era la línea que fija el centro para RLS en `get_db`, así que habría
+  tumbado cada petición; ninguna prueba sobre SQLite lo veía. Ahora es
+  `set_config(..., true)`.
+
+Para ese tercer tipo de fallo, el del driver, hay pruebas contra un Postgres
+real en `tests/test_postgres_driver.py`. En CI corren siempre (el job levanta un
+Postgres 16); en local se saltan salvo que se defina `TEST_POSTGRES_URL`. **Todo
+SQL crudo con parámetros fuera de `SELECT`/`INSERT`/`UPDATE`/`DELETE` lleva su
+prueba ahí.**
 
 La regla práctica: **si una consulta sostiene un control de acceso o una cifra
 que alguien va a leer, que no dependa del dialecto.** Resolver en Python lo

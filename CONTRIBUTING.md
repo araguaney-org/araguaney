@@ -32,12 +32,21 @@ cd backend
 python3.12 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 pip install pytest pytest-asyncio httpx
-python -m pytest -q          # 880+ tests, no external services
+python -m pytest -q          # 1000+ tests, no external services
 ```
 
 The whole suite — including the multi-tenant isolation tests in `tests/tenant/`
 — runs on in-memory SQLite. You need neither Postgres nor Redis to develop. To
 run the server you do: copy `.env.example` to `.env` and start a local Postgres.
+
+The few tests that only make sense against a real Postgres (driver behaviour,
+in `tests/test_postgres_driver.py`) are skipped unless `TEST_POSTGRES_URL` is
+set. CI always runs them. Locally:
+
+```bash
+docker run -d --name pg-test -e POSTGRES_PASSWORD=test -p 55432:5432 postgres:16
+TEST_POSTGRES_URL=postgresql://postgres:test@localhost:55432/postgres python -m pytest -q tests/test_postgres_driver.py
+```
 
 Python 3.12 is not arbitrary: it is the version CI uses. A suite that passes on
 another version is a statement about your machine, not about CI.
