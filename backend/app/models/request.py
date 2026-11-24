@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Text, DateTime, ForeignKey, func
+from sqlalchemy import Column, String, Text, DateTime, ForeignKey, func, Index
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -20,6 +20,15 @@ class Request(Base):
 
     messages = relationship("RequestMessage", back_populates="request", cascade="all, delete-orphan")
 
+    # Índices creados por migraciones. Se declaran aquí para que el modelo y
+    # el esquema coincidan: sin esto, `alembic revision --autogenerate`
+    # propone borrarlos. El CI lo vigila con `alembic check`.
+    __table_args__ = (
+        Index("ix_requests_center", "center_id"),
+        Index("ix_requests_center_status_created", center_id, status, created_at.desc()),
+        Index("ix_requests_status", "status"),
+    )
+
 
 class RequestMessage(Base):
     __tablename__ = "request_messages"
@@ -31,3 +40,10 @@ class RequestMessage(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
     request = relationship("Request", back_populates="messages")
+
+    # Índices creados por migraciones. Se declaran aquí para que el modelo y
+    # el esquema coincidan: sin esto, `alembic revision --autogenerate`
+    # propone borrarlos. El CI lo vigila con `alembic check`.
+    __table_args__ = (
+        Index("ix_req_messages_request", "request_id"),
+    )

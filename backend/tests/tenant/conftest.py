@@ -14,7 +14,8 @@ import os
 import uuid
 from datetime import date, timedelta
 
-os.environ.setdefault("DATABASE_URL", "postgresql://test:test@localhost/test")
+# Puerto 1 a propósito: ver tests/conftest.py.
+os.environ.setdefault("DATABASE_URL", "postgresql://test:test@127.0.0.1:1/test")
 os.environ.setdefault("SECRET_KEY", "test-secret-key-for-unit-tests-only-32-chars")
 os.environ.setdefault("FRONTEND_URL", "http://localhost:3000")
 

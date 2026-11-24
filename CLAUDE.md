@@ -531,6 +531,10 @@ mismo que corre en producción.
 - Alembic encadenado: `002` → `001_add_login_lockout`.
 - Toda nueva migración: `alembic revision --autogenerate -m "desc"` + `alembic upgrade head`.
 - Importar nuevo modelo en `alembic/env.py`.
+- **Todo índice va también en el modelo** (`__table_args__`), no solo en la
+  migración. Si el modelo no lo declara, la siguiente autogeneración propone
+  borrarlo. El CI corre `alembic upgrade head` + `alembic check` contra Postgres
+  y falla si modelos y esquema no coinciden.
 
 ### API
 

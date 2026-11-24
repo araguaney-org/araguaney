@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, DateTime, ForeignKey, CheckConstraint, UniqueConstraint
+from sqlalchemy import Column, String, DateTime, ForeignKey, CheckConstraint, UniqueConstraint, Index
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -14,6 +14,8 @@ class Transfer(Base):
             "status IN ('REQUESTED','APPROVED','IN_TRANSIT','RECEIVED','REJECTED')",
             name="transfers_status_check",
         ),
+        # Índices creados por migraciones; el CI lo vigila con `alembic check`.
+        Index("ix_transfers_status", "status"),
     )
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
