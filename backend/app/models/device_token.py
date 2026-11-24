@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, DateTime, ForeignKey, String, UniqueConstraint
+from sqlalchemy import Column, DateTime, ForeignKey, String, UniqueConstraint, Index, text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 
@@ -33,6 +33,8 @@ class DeviceToken(Base):
         # esquema y no una comprobación previa: dos registros simultáneos desde
         # la misma instalación tienen una carrera en medio.
         UniqueConstraint("token", name="uq_device_tokens_token"),
+        # Índices creados por migraciones; el CI lo vigila con `alembic check`.
+        Index("ix_device_tokens_active_by_user", "user_id", postgresql_where=text("revoked_at IS NULL"), sqlite_where=text("revoked_at IS NULL")),
     )
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

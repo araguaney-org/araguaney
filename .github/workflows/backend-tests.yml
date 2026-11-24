@@ -48,5 +48,16 @@ jobs:
           # pypdf: solo para pruebas. Las etiquetas se verifican leyendo el
           # texto del PDF generado, no el fuente que lo escribe.
           pip install pytest pytest-asyncio httpx pypdf
+      # Las migraciones corren completas contra Postgres, y los modelos tienen que
+      # coincidir con el esquema que dejan: si no, `alembic revision
+      # --autogenerate` propone cambios que nadie pidió (borrar índices de
+      # producción, por ejemplo). SECRET_KEY es un valor de relleno solo para CI.
+      - name: Migrations apply and models match the schema
+        env:
+          DATABASE_URL: ${{ env.TEST_POSTGRES_URL }}
+          SECRET_KEY: ci-only-not-a-secret-0123456789abcdef0123456789abcdef
+        run: |
+          alembic upgrade head
+          alembic check
       - name: Run test suite (unit + tenant isolation)
         run: python -m pytest -q

@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Text, text
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Text, text, Index
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -22,7 +22,7 @@ class Donation(Base):
     __tablename__ = "donations"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    code = Column(String, nullable=False, unique=True, index=True)  # DN-XXXX → QR
+    code = Column(String, nullable=False)  # DN-XXXX → QR
 
     donor_id = Column(
         UUID(as_uuid=True), ForeignKey("donors.id", ondelete="CASCADE"), nullable=False, index=True
@@ -72,6 +72,13 @@ class Donation(Base):
     )
     photos = relationship(
         "DonationPhoto", cascade="all, delete-orphan", lazy="selectin", back_populates="donation"
+    )
+
+    # Índices creados por migraciones. Se declaran aquí para que el modelo y
+    # el esquema coincidan: sin esto, `alembic revision --autogenerate`
+    # propone borrarlos. El CI lo vigila con `alembic check`.
+    __table_args__ = (
+        Index("uq_donations_code", "code", unique=True),
     )
 
 

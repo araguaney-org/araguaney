@@ -37,6 +37,8 @@ class Thread(Base):
         CheckConstraint("thread_type IN ('PRIVATE', 'PUBLIC')", name="ck_thread_type"),
         Index("ix_threads_campaign_type", "campaign_id", "thread_type"),
         Index("ix_threads_updated", "updated_at"),
+        # Índices creados por migraciones; el CI lo vigila con `alembic check`.
+        Index("ix_threads_sender", "sender_id"),
     )
 
 
@@ -91,4 +93,7 @@ class ThreadAttachment(Base):
     __table_args__ = (
         CheckConstraint("thread_id IS NOT NULL OR reply_id IS NOT NULL", name="ck_attachment_parent"),
         Index("ix_thread_attachments_expires", "expires_at"),
+        # Índices creados por migraciones; el CI lo vigila con `alembic check`.
+        Index("ix_thread_attachments_reply", "reply_id"),
+        Index("ix_thread_attachments_thread", "thread_id"),
     )

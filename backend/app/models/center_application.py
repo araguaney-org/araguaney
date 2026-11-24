@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, DateTime, ForeignKey, String, Text
+from sqlalchemy import Column, DateTime, ForeignKey, String, Text, Index
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 
@@ -49,3 +49,13 @@ class CenterApplication(Base):
 
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updated_at = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+
+    # Índices creados por migraciones. Se declaran aquí para que el modelo y
+    # el esquema coincidan: sin esto, `alembic revision --autogenerate`
+    # propone borrarlos. El CI lo vigila con `alembic check`.
+    __table_args__ = (
+        Index("ix_center_applications_country_code", "country_code"),
+        Index("ix_center_applications_email_lower", func.lower(contact_email)),
+        Index("ix_center_applications_status", "status"),
+        Index("ix_center_applications_token", "email_verify_token_hash"),
+    )

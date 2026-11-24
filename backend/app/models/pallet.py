@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, Numeric, String
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, Numeric, String, Index
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -24,3 +24,11 @@ class Pallet(Base):
     closed_at = Column(DateTime(timezone=True), nullable=True)
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updated_at = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+
+    # Índices creados por migraciones. Se declaran aquí para que el modelo y
+    # el esquema coincidan: sin esto, `alembic revision --autogenerate`
+    # propone borrarlos. El CI lo vigila con `alembic check`.
+    __table_args__ = (
+        Index("ix_pallets_center_status", "center_id", "status"),
+        Index("ix_pallets_center_status_created", center_id, status, created_at.desc()),
+    )

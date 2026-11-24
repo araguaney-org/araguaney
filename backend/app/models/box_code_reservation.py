@@ -10,7 +10,7 @@ cuenta como inventario en ningún reporte.
 
 import uuid
 
-from sqlalchemy import Column, DateTime, ForeignKey, String
+from sqlalchemy import Column, DateTime, ForeignKey, String, Index
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 
@@ -33,3 +33,10 @@ class BoxCodeReservation(Base):
 
     used_at = Column(DateTime(timezone=True), nullable=True)
     box_id = Column(UUID(as_uuid=True), ForeignKey("boxes.id", ondelete="SET NULL"), nullable=True)
+
+    # Índices creados por migraciones. Se declaran aquí para que el modelo y
+    # el esquema coincidan: sin esto, `alembic revision --autogenerate`
+    # propone borrarlos. El CI lo vigila con `alembic check`.
+    __table_args__ = (
+        Index("ix_box_code_reservations_available", "center_id", "used_at"),
+    )

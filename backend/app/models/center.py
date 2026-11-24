@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Boolean, Column, String, DateTime
+from sqlalchemy import Boolean, Column, String, DateTime, Index, true
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -28,3 +28,12 @@ class Center(Base):
     is_active = Column(Boolean, nullable=False, server_default="true")
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updated_at = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+
+    # Índices creados por migraciones. Se declaran aquí para que el modelo y
+    # el esquema coincidan: sin esto, `alembic revision --autogenerate`
+    # propone borrarlos. El CI lo vigila con `alembic check`.
+    __table_args__ = (
+        Index("ix_centers_active", "id", postgresql_where=(is_active == true()), sqlite_where=(is_active == true())),
+        Index("ix_centers_country_code", "country_code"),
+        Index("ix_centers_is_active", "is_active"),
+    )

@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, Numeric, String, DateTime
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, Numeric, String, DateTime, Index
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -33,3 +33,13 @@ class ProductType(Base):
     campaign_id = Column(UUID(as_uuid=True), ForeignKey("campaigns.id", ondelete="SET NULL"), nullable=True, index=True)
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updated_at = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+
+    # Índices creados por migraciones. Se declaran aquí para que el modelo y
+    # el esquema coincidan: sin esto, `alembic revision --autogenerate`
+    # propone borrarlos. El CI lo vigila con `alembic check`.
+    __table_args__ = (
+        Index("ix_product_types_category", "category"),
+        Index("ix_product_types_gtin", "gtin"),
+        Index("ix_product_types_inn_name", "inn_name"),
+        Index("ix_product_types_unspsc_code", "unspsc_code"),
+    )

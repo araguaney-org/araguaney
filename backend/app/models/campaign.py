@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Boolean, Column, Date, Numeric, String, DateTime
+from sqlalchemy import Boolean, Column, Date, Numeric, String, DateTime, Index
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -23,3 +23,11 @@ class Campaign(Base):
     weight_goal_kg = Column(Numeric(10, 3), nullable=True)
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updated_at = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+
+    # Índices creados por migraciones. Se declaran aquí para que el modelo y
+    # el esquema coincidan: sin esto, `alembic revision --autogenerate`
+    # propone borrarlos. El CI lo vigila con `alembic check`.
+    __table_args__ = (
+        Index("ix_campaigns_destination_country", "destination_country"),
+        Index("ix_campaigns_is_active", "is_active"),
+    )

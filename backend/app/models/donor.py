@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, DateTime, ForeignKey, String
+from sqlalchemy import Column, DateTime, ForeignKey, String, Index, and_
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from app.database import Base
@@ -47,3 +47,11 @@ class Donor(Base):
 
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updated_at = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+
+    # Índices creados por migraciones. Se declaran aquí para que el modelo y
+    # el esquema coincidan: sin esto, `alembic revision --autogenerate`
+    # propone borrarlos. El CI lo vigila con `alembic check`.
+    __table_args__ = (
+        Index("uq_donors_email_center", "email", "center_id", unique=True, postgresql_where=and_(source == "center", email.isnot(None)), sqlite_where=and_(source == "center", email.isnot(None))),
+        Index("uq_donors_email_self", "email", unique=True, postgresql_where=and_(source == "self", email.isnot(None)), sqlite_where=and_(source == "self", email.isnot(None))),
+    )
