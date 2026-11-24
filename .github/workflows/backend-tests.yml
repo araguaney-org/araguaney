@@ -19,6 +19,22 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    # La suite corre sobre SQLite, pero lo que depende del driver de Postgres
+    # solo se ve contra un Postgres de verdad (tests/test_postgres_driver.py,
+    # que se salta sin TEST_POSTGRES_URL). Misma versión que producción.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      TEST_POSTGRES_URL: postgresql://postgres:test@localhost:5432/postgres
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7

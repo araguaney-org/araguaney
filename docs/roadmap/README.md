@@ -3,9 +3,9 @@
 ## Progreso general
 
 ```mermaid
-pie title Tareas completadas (534 tareas)
+pie title Tareas completadas (535 tareas)
     "Listas" : 499
-    "Pendientes" : 24
+    "Pendientes" : 25
     "Canceladas" : 11
 ```
 
@@ -23,7 +23,7 @@ pie title Tareas completadas (534 tareas)
 | 9 | [Reportes de campaña](phase-09-reports.md) | 8 | 0 | 0 | ✅ 100% |
 | 10 | [Endurecimiento de seguridad (post-auditoría)](phase-10-security-hardening.md) | 22 | 0 | 0 | ✅ 100% |
 | 11 | [SEO y reposicionamiento genérico](phase-11-seo-positioning.md) | 26 | 0 | 0 | ✅ 100% |
-| 12 | [Optimización y rendimiento](phase-12-optimization.md) | 29 | 0 | 0 | ✅ 100% |
+| 12 | [Optimización y rendimiento](phase-12-optimization.md) | 29 | 1 | 0 | 🟡 97% |
 | 13 | [Compliance y legal](phase-13-compliance-legal.md) | 10 | 0 | 10 | ✅ 100% |
 | 14 | [Auto-registro de centros con aprobación](phase-14-center-self-registration.md) | 17 | 0 | 0 | ✅ 100% |
 | 15 | [Deliverability de emails + aviso de solicitudes](phase-15-email-deliverability.md) | 15 | 0 | 0 | ✅ 100% |
@@ -42,7 +42,7 @@ pie title Tareas completadas (534 tareas)
 | 28 | [Otro nombre para el mismo producto](phase-28-product-aliases.md) | 6 | 2 | 0 | 🟡 75% |
 | 29 | [De `araguaney.lat` a `araguaney.org`](phase-29-domain-migration.md) | 16 | 8 | 1 | 🟡 67% |
 | 30 | [Aprovechar Project Galileo](phase-30-galileo-hardening.md) | 5 | 1 | 0 | 🟡 83% |
-| **Total** | | **499** | **24** | **11** | **🟡 93%** |
+| **Total** | | **499** | **25** | **11** | **🟡 93%** |
 
 > **Canceladas (11):** la tarea 16 de la Fase 29 (mover el webhook de Resend) no aplica mientras el webhook siga apagado a propósito; el hueco queda en `docs/observability.md`. Las otras diez: el bloque de donativos/pagos de la Fase 13 (Grupo B: entidad receptora,
 > asesoría legal/contable, procesador de pagos, T&C de donación, transparencia) se canceló el
