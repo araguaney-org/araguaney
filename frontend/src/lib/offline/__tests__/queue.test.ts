@@ -208,6 +208,25 @@ describe("sincronizar", () => {
     expect(capture.payload.capture_id).toBe(capture_id)
   })
 
+  it("un bloqueo del firewall queda en pendientes con su motivo, no se reintenta a ciegas", async () => {
+    // Cuando el estado se puede leer, el HTML de Cloudflare dice que la API
+    // nunca vio la captura: mandarla igual daría el mismo bloqueo.
+    await enqueue()
+    vi.stubGlobal("fetch", vi.fn(async () => ({
+      ok: false,
+      status: 403,
+      headers: new Headers({ "content-type": "text/html; charset=UTF-8" }),
+      json: async () => { throw new SyntaxError("not json") },
+    }) as unknown as Response))
+
+    const outcome = await syncQueue("token", USER)
+
+    expect(outcome.rejected).toBe(1)
+    const [capture] = await listCaptures()
+    expect(capture.status).toBe("REJECTED")
+    expect(capture.last_error).toMatch(/firewall/i)
+  })
+
   it("el límite por minuto detiene la tanda sin gastar intentos", async () => {
     await enqueue()
     await enqueue()
