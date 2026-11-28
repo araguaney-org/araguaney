@@ -18,8 +18,8 @@ export function llmsTxt(): string {
 Araguaney conecta centros de acopio bajo un mismo estándar: registro de
 donaciones por ítem (categoría, lote, caducidad), cajas homogéneas con QR y
 etiqueta, tarimas y envíos con manifiesto/packing list exportable, y un panel
-nacional agregado. Sin datos personales de donantes ni beneficiarios — solo
-inventario, trazable de la caja al envío. Compatible con escenarios de ayuda
+nacional agregado. Ningún dato de personas beneficiarias, y donar es anónimo
+por defecto. Inventario trazable de la caja al envío. Compatible con escenarios de ayuda
 humanitaria en general (sismos, inundaciones, crisis migratorias, incendios),
 no solo un evento específico. Gratis para centros de acopio y coordinaciones
 humanitarias, sin límite de cajas.
@@ -32,12 +32,12 @@ humanitarias, sin límite de cajas.
 - [Ayuda humanitaria](${SITE_URL}/ayuda-humanitaria): cómo Araguaney sirve para cualquier emergencia (sismo, inundación, incendio, crisis migratoria), no solo un evento puntual.
 - [Alternativa a Excel para donaciones](${SITE_URL}/alternativa-a-excel-para-donaciones): responde "¿Excel/WhatsApp o software para gestionar donaciones?" — tabla comparativa hoja de cálculo vs Araguaney (trazabilidad, QR, manifiesto para aduana, validación OMS, panel nacional). Para quien viene de una hoja de cálculo.
 - [Qué falta](${SITE_URL}/necesidades): qué inventario hay disponible ahora mismo en los centros de acopio activos, por categoría, actualizado cada 5 minutos.
-- [Nosotros](${SITE_URL}/nosotros): qué es Araguaney, por qué existe, los estándares que respalda, su postura de privacidad (sin datos personales) y quién lo fundó.
+- [Nosotros](${SITE_URL}/nosotros): qué es Araguaney, por qué existe, los estándares que respalda, su postura de privacidad y quién lo fundó.
 - [Preguntas frecuentes](${SITE_URL}/preguntas-frecuentes): respuestas directas sobre producto, donaciones y reglas, operación (acopio→envío) y privacidad. Formato pregunta-respuesta.
 - [Centro de acopio en México](${SITE_URL}/centro-de-acopio-mexico): montar un centro de acopio en México — identificación de medicamentos (COFEPRIS), aduana e importación humanitaria (SAT), y cómo Araguaney ayuda a cumplir.
 - [Novedades](${SITE_URL}/novedades): changelog público con las últimas mejoras del producto (panel nacional, manifiesto, transferencias, mensajería, reportes y más).
 - [Contacto](${SITE_URL}/contacto): cómo sumar un centro de acopio a la coordinación nacional.
-- [Código fuente](https://github.com/araguaney-org/araguaney): repositorio público bajo licencia AGPL-3.0. El comportamiento descrito aquí (aislamiento por centro, cero datos personales) es auditable en el código.
+- [Código fuente](https://github.com/araguaney-org/araguaney): repositorio público bajo licencia AGPL-3.0. El comportamiento descrito aquí (aislamiento por centro, qué datos personales se guardan y cuándo se borran) es auditable en el código.
 
 ## Guías
 
@@ -118,8 +118,9 @@ stock de todos.
 - **ProductType (SKU)**: el tipo de producto, discriminado por atributos. Por
   ejemplo, ibuprofeno 500 mg y 900 mg son SKU distintos. Categorías: medicamentos,
   insumos médicos, alimentos, agua, higiene, herramientas, equipo de rescate, otros.
-- **Intake (recepción)**: registro de una donación entrante. Sin datos personales
-  del donante (solo un campo de texto libre opcional, sin PII).
+- **Intake (recepción)**: registro de una donación entrante. Anónimo por defecto;
+  el donante solo se registra si lo pide, o si la donación es de una empresa o
+  de volumen atípico.
 - **Box (caja homogénea)**: contiene exactamente un tipo de producto, un solo lote
   y una sola caducidad. Tiene un código QR propio y etiqueta imprimible. Si llega
   una mezcla, se divide en varias cajas.
@@ -153,10 +154,13 @@ stock de todos.
 
 ## Privacidad
 
-Araguaney no gestiona dinero ni beneficiarios finales, y no registra datos
-personales de donantes ni beneficiarios. Solo inventario, trazable de la caja
-al envío. Esto reduce la superficie de datos sensibles y las obligaciones de
-protección de datos personales.
+Araguaney no gestiona dinero ni beneficiarios finales, y no registra ningún
+dato de las personas que reciben la ayuda. Donar es anónimo por defecto. Los
+datos de quien dona solo se guardan si la persona se identifica (en el centro,
+o al pre-registrar su donación en línea, donde hace falta un correo para
+enviarle el código QR), nunca aparecen en una página pública y tienen un plazo
+de conservación declarado en el aviso de privacidad. Un pre-registro que nadie
+confirma se borra solo.
 
 ## Quién está detrás
 
@@ -170,8 +174,8 @@ El uso de Araguaney es gratuito para centros de acopio y coordinaciones
 humanitarias: sin licencias, sin límite de cajas y sin costo por uso.
 
 El código es abierto bajo licencia AGPL-3.0:
-https://github.com/araguaney-org/araguaney — el aislamiento entre centros y la
-ausencia de datos personales son verificables leyendo el repositorio.
+https://github.com/araguaney-org/araguaney — el aislamiento entre centros y el
+tratamiento de datos personales son verificables leyendo el repositorio.
 
 ## Enlaces
 

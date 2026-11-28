@@ -64,8 +64,8 @@
       },
       {
         "icon": "🔒",
-        "title": "No personal data",
-        "desc": "No donor or recipient personal data is stored. Just inventory, traceable from box to shipment."
+        "title": "Privacy by design",
+        "desc": "No data about aid recipients, and donating is anonymous by default. What a donor who identifies themselves leaves has a retention period and is never published."
       }
     ],
     "link_centro": "See the donation center standard (Spanish) →",
@@ -1166,7 +1166,7 @@
   },
   "footer": {
     "tagline": "The common standard for aid centers",
-    "privacy": "No personal data of donors or recipients. Just inventory, traceable from box to shipment.",
+    "privacy": "No data about aid recipients, and donating is anonymous by default. Traceable from box to shipment.",
     "privacyLink": "Privacy Notice",
     "termsLink": "Terms and Conditions"
   },
@@ -1185,7 +1185,7 @@
       "mobile_tagline": "Aid center panel",
       "hero_title": "Every box counts. Every shipment arrives.",
       "hero_subtitle": "Access your center's panel to register donations, seal boxes, and prepare shipments with a manifest.",
-      "hero_no_pii": "No personal data of donors or recipients.",
+      "hero_no_pii": "No data about aid recipients. Donating is anonymous by default.",
       "title": "Sign in",
       "subtitle": "Access your aid center's panel.",
       "email_label": "Email",

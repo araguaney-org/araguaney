@@ -104,9 +104,11 @@ Qué revisar antes de confirmar la renovación:
 - La licencia sigue siendo AGPL-3.0 y el repositorio sigue público.
 - `SECURITY.md`, `CODE_OF_CONDUCT.md` y `CONTRIBUTING.md` siguen vigentes y con
   contactos que funcionan.
-- Sigue sin registrarse PII de donantes ni beneficiarios (es el indicador donde
-  el proyecto es más fuerte, y el más fácil de romper sin darse cuenta al
-  agregar features).
+- Sigue sin registrarse ningún dato de personas beneficiarias, y los datos de
+  quien dona solo entran por las vías previstas (pre-registro en línea y
+  registro opcional en ventanilla), con su plazo de conservación (es el
+  indicador donde el proyecto es más fuerte, y el más fácil de romper sin darse
+  cuenta al agregar features).
 - Los exportes no-PII siguen disponibles (manifiesto XLSX, CSV de reportes, API).
 - Aviso de privacidad y Términos siguen publicados y actualizados.
 

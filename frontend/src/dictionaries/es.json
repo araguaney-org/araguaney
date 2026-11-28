@@ -64,8 +64,8 @@
       },
       {
         "icon": "🔒",
-        "title": "Sin datos personales",
-        "desc": "No se almacenan datos personales de donantes ni beneficiarios. Solo inventario, trazable de la caja al envío."
+        "title": "Privacidad por diseño",
+        "desc": "Ningún dato de personas beneficiarias, y donar es anónimo por defecto. Lo que deja quien se identifica tiene plazo de conservación y nunca se publica."
       }
     ],
     "link_centro": "Ver el estándar para centros de acopio →",
@@ -1166,7 +1166,7 @@
   },
   "footer": {
     "tagline": "El estándar común para centros de acopio",
-    "privacy": "Sin datos personales de donantes ni beneficiarios. Solo inventario, trazable de la caja al envío.",
+    "privacy": "Ningún dato de personas beneficiarias, y donar es anónimo por defecto. Trazable de la caja al envío.",
     "privacyLink": "Aviso de Privacidad",
     "termsLink": "Términos y Condiciones"
   },
@@ -1185,7 +1185,7 @@
       "mobile_tagline": "Panel del centro de acopio",
       "hero_title": "Cada caja cuenta. Cada envío llega.",
       "hero_subtitle": "Accede al panel de tu centro para registrar donaciones, sellar cajas y preparar envíos con manifiesto.",
-      "hero_no_pii": "Sin datos personales de donantes ni beneficiarios.",
+      "hero_no_pii": "Ningún dato de personas beneficiarias. Donar es anónimo por defecto.",
       "title": "Inicia sesión",
       "subtitle": "Accede al panel de tu centro de acopio.",
       "email_label": "Correo electrónico",
