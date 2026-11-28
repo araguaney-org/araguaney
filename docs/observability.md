@@ -36,7 +36,7 @@ Por eso hay dos familias de señal: **algo falló** y **algo dejó de ocurrir**.
 | Error del frontend | Excepción en cliente, servidor o edge de Next | Sentry | Diagnóstico |
 | `Origen de la API inalcanzable` | Cloudflare deja de alcanzar Railway durante 5 minutos (errores 521) | Correo del buzón del proyecto (alerta de Cloudflare) | Railway está caído o rechazando todo. Revisar el despliegue y el encabezado de origen; ver el runbook de emergencia |
 | `Ataque DDoS HTTP mitigado` | Cloudflare detecta y mitiga un ataque DDoS de capa 7 contra la API | Correo del buzón del proyecto | Normalmente no hay que hacer nada: ya se mitigó. Confirmar que la API sigue respondiendo y que el gasto de Railway no se movió |
-| `Pico de eventos de seguridad` | Aumento anómalo de peticiones que el WAF bloquea o registra en la zona de la API | Correo del buzón del proyecto | Mirar *Security → Analytics → Events*: si es un ataque, seguir el runbook; si son falsos positivos del ruleset administrado, ajustarlo antes de pasarlo a bloqueo |
+| `Pico de eventos de seguridad` | Aumento anómalo de peticiones que el WAF bloquea o registra en la zona de la API | Correo del buzón del proyecto | Mirar *Security → Analytics → Events*: si es un ataque, seguir el runbook; el ruleset administrado bloquea desde la Fase 30, así que un falso positivo llega al cliente como 403: excluir esa regla sobre esa ruta en vez de devolver todo el ruleset a **Log** |
 
 ### Dos decisiones de diseño que explican el ruido que no ves
 
