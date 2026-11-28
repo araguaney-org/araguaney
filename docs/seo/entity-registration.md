@@ -149,9 +149,12 @@ datos personales:
 No hay PII que exportar: el sistema no registra datos de donantes ni
 beneficiarios.
 
-**7. Privacidad y cumplimiento legal**: sí se recogen datos personales, pero
-solo de las **personas operadoras** (nombre, correo institucional), no de
-donantes ni beneficiarios. Aviso de privacidad:
+**7. Privacidad y cumplimiento legal**: de las personas beneficiarias no se
+recoge nada. Sí se recogen datos de las **personas operadoras** (nombre, correo
+institucional) y, solo cuando se identifican, de **quien dona**: donar es
+anónimo por defecto, el pre-registro en línea pide nombre y correo para enviar
+el código QR, y todo tiene plazo de conservación declarado (detalle en el campo
+`privacy_note` del JSON). Aviso de privacidad:
 https://www.araguaney.org/aviso-de-privacidad · Términos:
 https://www.araguaney.org/terminos · Jurisdicción y ley aplicable: México
 (LFPDPPP), declarada en los Términos.
@@ -218,15 +221,16 @@ and humanitarian logistics.
 > Araguaney es software libre y gratuito para centros de acopio: registra
 > donaciones en especie por ítem, las empaca en cajas homogéneas con QR, las
 > consolida en tarimas y envíos con manifiesto exportable para aduana, y suma
-> el stock de todos los centros en un panel nacional. No almacena datos
-> personales de donantes ni beneficiarios.
+> el stock de todos los centros en un panel nacional. No guarda ningún dato de
+> las personas que reciben la ayuda, y donar es anónimo por defecto.
 
 **Descripción corta (EN, ~50 palabras)**:
 > Araguaney is free and open-source software for aid collection centers: it
 > registers in-kind donations item by item, packs them into homogeneous boxes
 > with QR codes, consolidates them into pallets and shipments with a
 > customs-ready manifest, and aggregates every center's stock into a national
-> dashboard. It stores no personal data of donors or beneficiaries.
+> dashboard. It stores no data about aid recipients, and donating is anonymous
+> by default.
 
 **Enlaces**: sitio `https://www.araguaney.org` · código
 `https://github.com/araguaney-org/araguaney` · licencia AGPL-3.0
@@ -357,7 +361,9 @@ portal.
 
 - [x] Declarar ODS en el README (brecha del indicador 1 del DPG)
 - [x] Postular al DPG Registry (enviada el 2026-07-27, en revisión)
-- [ ] Anuncio de lanzamiento open source (base para ReliefWeb y otros)
+- [x] Anuncio de lanzamiento open source (base para ReliefWeb y otros):
+  borrador en [`launch-announcement.md`](launch-announcement.md), listo para
+  publicar
 - [ ] Alta en 2-3 catálogos de tecnología humanitaria
 - [ ] Crear el ítem de Wikidata (después de la primera referencia independiente)
 - [ ] Agregar el QID a `BRAND_SAME_AS`

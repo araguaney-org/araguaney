@@ -67,7 +67,7 @@ const CONTENT: Record<Locale, Content> = {
     lead: "Completa los datos de tu centro y de un contacto responsable. Revisaremos tu solicitud y, al aprobarla, crearemos tu centro y tu acceso de coordinador.",
     privacyLabel: "Privacidad.",
     privacyText:
-      " No recopilamos datos de donantes ni beneficiarios. Estos datos solo sirven para dar de alta tu centro y contactar a la persona responsable.",
+      " Este formulario no pide datos de donantes ni de beneficiarios. Lo que escribes aquí solo sirve para dar de alta tu centro y contactar a la persona responsable.",
     form: {
       centerName: "Nombre del centro",
       centerNamePlaceholder: "Centro de Acopio Solidaridad",
@@ -107,7 +107,7 @@ const CONTENT: Record<Locale, Content> = {
     lead: "Fill in your center's details and a responsible contact. We'll review your application and, once approved, create your center and your coordinator access.",
     privacyLabel: "Privacy.",
     privacyText:
-      " We don't collect donor or beneficiary data. This information is only used to register your center and to contact the responsible person.",
+      " This form does not ask for donor or beneficiary data. What you enter here is only used to register your center and to contact the responsible person.",
     form: {
       centerName: "Center name",
       centerNamePlaceholder: "Solidarity Collection Center",

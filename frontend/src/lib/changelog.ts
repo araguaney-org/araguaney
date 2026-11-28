@@ -25,11 +25,11 @@ export const CHANGELOG: readonly ChangelogEntry[] = [
     tag: "new",
     es: {
       title: "Araguaney es código abierto",
-      body: "El código de la plataforma es público bajo licencia AGPL-3.0. Cualquiera puede auditar que el inventario de cada centro está aislado y que no se guardan datos personales, o levantar su propia instancia.",
+      body: "El código de la plataforma es público bajo licencia AGPL-3.0. Cualquiera puede auditar que el inventario de cada centro está aislado y cómo se tratan los datos personales, o levantar su propia instancia.",
     },
     en: {
       title: "Araguaney is open source",
-      body: "The platform's code is public under the AGPL-3.0 license. Anyone can audit that each center's inventory is isolated and that no personal data is stored, or run their own instance.",
+      body: "The platform's code is public under the AGPL-3.0 license. Anyone can audit that each center's inventory is isolated and how personal data is handled, or run their own instance.",
     },
   },
   {

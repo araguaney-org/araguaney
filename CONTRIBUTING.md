@@ -19,8 +19,11 @@ with tests is far more likely to be merged quickly than a large one.
 ## What probably will not be merged
 
 - Large features without prior discussion in an issue.
-- Changes that introduce personal data about donors or beneficiaries. This is a
-  product line, not a technical one: **no PII is recorded**.
+- Changes that introduce personal data about beneficiaries, or about donors
+  outside the paths the product already defines (online pre-registration and
+  optional registration at the counter). This is a product line, not a
+  technical one: **beneficiary data is never recorded, and donating is
+  anonymous by default**.
 - Heavy new dependencies without justification.
 
 ## Development setup
