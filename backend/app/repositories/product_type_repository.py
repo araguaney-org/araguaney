@@ -4,7 +4,9 @@ from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session
 
 from app.models.product_alias import ProductAlias
+from app.models.product_alias_rejection import ProductAliasRejection
 from app.models.product_gtin import ProductGtin
+from app.models.product_mapping_choice import ProductMappingChoice
 from app.models.product_type import ProductType
 from app.repositories.base import BaseRepository
 from app.utils.text_matching import normalize
@@ -130,6 +132,41 @@ class ProductTypeRepository(BaseRepository):
 
     def delete_alias(self, fila: ProductAlias) -> None:
         self.db.delete(fila)
+
+    def reject_alias(self, product_type_id: UUID, normalized: str, user_id: UUID | None) -> None:
+        """Recuerda que este nombre se quitó de este producto. Idempotente:
+        quitar dos veces el mismo nombre deja una sola marca."""
+        if self.is_alias_rejected(product_type_id, normalized):
+            return
+        self.db.add(ProductAliasRejection(
+            product_type_id=product_type_id,
+            normalized=normalized,
+            rejected_by_user_id=user_id,
+        ))
+
+    def is_alias_rejected(self, product_type_id: UUID, normalized: str) -> bool:
+        return self.db.execute(
+            select(ProductAliasRejection.id).where(
+                ProductAliasRejection.product_type_id == product_type_id,
+                ProductAliasRejection.normalized == normalized,
+            )
+        ).first() is not None
+
+    def count_alias_confirmers(self, product_type_id: UUID, candidate: str) -> int:
+        """Cuántas personas distintas eligieron este producto para este nombre.
+
+        Personas, no elecciones: una sola cuenta repitiendo el mismo par no
+        suma, que es justo lo que acota el envenenamiento. Cruza centros a
+        propósito, porque el alias es global: un nombre confirmado en dos
+        centros es más evidencia, no menos.
+        """
+        return self.db.execute(
+            select(func.count(func.distinct(ProductMappingChoice.user_id))).where(
+                ProductMappingChoice.chosen_product_type_id == product_type_id,
+                ProductMappingChoice.alias_candidate == candidate,
+                ProductMappingChoice.user_id.is_not(None),
+            )
+        ).scalar_one()
 
     def find_by_id(self, pt_id: UUID) -> ProductType | None:
         return self.db.get(ProductType, pt_id)

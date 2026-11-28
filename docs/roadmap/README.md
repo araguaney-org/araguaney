@@ -4,8 +4,8 @@
 
 ```mermaid
 pie title Tareas completadas (535 tareas)
-    "Listas" : 501
-    "Pendientes" : 23
+    "Listas" : 503
+    "Pendientes" : 21
     "Canceladas" : 11
 ```
 
@@ -15,7 +15,7 @@ pie title Tareas completadas (535 tareas)
 | 1 | [Catálogo e intake con validaciones](phase-01-catalog-intake.md) | 8 | 0 | 0 | ✅ 100% |
 | 2 | [Caja homogénea, QR y etiqueta](phase-02-box-qr-label.md) | 6 | 0 | 0 | ✅ 100% |
 | 3 | [Tarima, envío y manifiesto](phase-03-pallet-shipment-manifest.md) | 9 | 0 | 0 | ✅ 100% |
-| 4 | [Panel agregado nacional + endurecimiento + OTP + scanning móvil](phase-04-national-dashboard-hardening.md) | 23 | 2 | 0 | ✅ 92% |
+| 4 | [Panel agregado nacional + endurecimiento + OTP + scanning móvil](phase-04-national-dashboard-hardening.md) | 24 | 1 | 0 | ✅ 96% |
 | 5 | [Studio — panel de administración + solicitudes](phase-05-studio.md) | 39 | 0 | 0 | ✅ 100% |
 | 6 | [Catálogos de referencia + lookups en tiempo real](phase-06-catalog-integrations.md) | 37 | 0 | 0 | ✅ 100% |
 | 7 | [Transferencias entre centros](phase-07-transfers.md) | 21 | 0 | 0 | ✅ 100% |
@@ -39,10 +39,10 @@ pie title Tareas completadas (535 tareas)
 | 25 | [Captura sin conexión: cola local y sincronización diferida](phase-25-offline-capture.md) | 14 | 0 | 0 | ✅ 100% |
 | 26 | [Soporte de backend para el cliente nativo](phase-26-native-client-support.md) | 20 | 0 | 0 | ✅ 100% |
 | 27 | [De quién es el día: zona horaria del centro](phase-27-center-timezone.md) | 6 | 0 | 0 | ✅ 100% |
-| 28 | [Otro nombre para el mismo producto](phase-28-product-aliases.md) | 6 | 2 | 0 | 🟡 75% |
+| 28 | [Otro nombre para el mismo producto](phase-28-product-aliases.md) | 7 | 1 | 0 | 🟡 88% |
 | 29 | [De `araguaney.lat` a `araguaney.org`](phase-29-domain-migration.md) | 16 | 8 | 1 | 🟡 67% |
 | 30 | [Aprovechar Project Galileo](phase-30-galileo-hardening.md) | 6 | 0 | 0 | ✅ 100% |
-| **Total** | | **501** | **23** | **11** | **🟡 94%** |
+| **Total** | | **503** | **21** | **11** | **🟡 94%** |
 
 > **Canceladas (11):** la tarea 16 de la Fase 29 (mover el webhook de Resend) no aplica mientras el webhook siga apagado a propósito; el hueco queda en `docs/observability.md`. Las otras diez: el bloque de donativos/pagos de la Fase 13 (Grupo B: entidad receptora,
 > asesoría legal/contable, procesador de pagos, T&C de donación, transparencia) se canceló el

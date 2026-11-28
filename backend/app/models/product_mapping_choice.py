@@ -28,6 +28,12 @@ class ProductMappingChoice(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 
     free_text = Column(String, nullable=False)
+    # El nombre de producto dentro del renglón (`alias_candidate`), ya
+    # normalizado. Se guarda al registrar y no se recalcula al consultar para
+    # que contar confirmaciones sea un `GROUP BY` indexado y no recorrer en
+    # Python cada elección del producto. Vacío si el renglón no tenía un
+    # nombre aprovechable: solo cantidades, o una frase entera.
+    alias_candidate = Column(String, nullable=True)
     suggested_product_type_ids = Column(JSONB, nullable=False, default=list)
 
     # SET NULL, no CASCADE: si el producto elegido se archiva después, el
@@ -46,4 +52,9 @@ class ProductMappingChoice(Base):
     # propone borrarlos. El CI lo vigila con `alembic check`.
     __table_args__ = (
         Index("ix_product_mapping_choices_created_at", "created_at"),
+        Index(
+            "ix_product_mapping_choices_product_candidate",
+            "chosen_product_type_id",
+            "alias_candidate",
+        ),
     )

@@ -37,6 +37,7 @@ Por eso hay dos familias de señal: **algo falló** y **algo dejó de ocurrir**.
 | `Origen de la API inalcanzable` | Cloudflare deja de alcanzar Railway durante 5 minutos (errores 521) | Correo del buzón del proyecto (alerta de Cloudflare) | Railway está caído o rechazando todo. Revisar el despliegue y el encabezado de origen; ver el runbook de emergencia |
 | `Ataque DDoS HTTP mitigado` | Cloudflare detecta y mitiga un ataque DDoS de capa 7 contra la API | Correo del buzón del proyecto | Normalmente no hay que hacer nada: ya se mitigó. Confirmar que la API sigue respondiendo y que el gasto de Railway no se movió |
 | `Pico de eventos de seguridad` | Aumento anómalo de peticiones que el WAF bloquea o registra en la zona de la API | Correo del buzón del proyecto | Mirar *Security → Analytics → Events*: si es un ataque, seguir el runbook; el ruleset administrado bloquea desde la Fase 30, así que un falso positivo llega al cliente como 403: excluir esa regla sobre esa ruta en vez de devolver todo el ruleset a **Log** |
+| `Petición bloqueada (…)` | Una sesión real de la web chocó con el WAF de Cloudflare (`edge`), probablemente con él aunque el navegador no pudo leer la respuesta (`edge-suspected`), o con el límite de tasa de la API (`api`). Un aviso por operación y página, agrupado por la plantilla de la ruta, sin ids | Correo (alerta de Sentry sobre la etiqueta `blocked_request`, solo en issues nuevos o reabiertos) | Si es `edge` o `edge-suspected`, buscar en *Security → Events* la regla que disparó sobre esa ruta y excluirla ahí. Si es `api`, revisar si el límite de esa ruta es demasiado estrecho para el uso real. Una captura offline bloqueada por el WAF desde el navegador se sigue reintentando: el aviso es la forma de enterarse |
 
 ### Dos decisiones de diseño que explican el ruido que no ves
 
@@ -151,6 +152,10 @@ Huecos conocidos, a la fecha de este documento:
    vigente de la API (hoy `api.araguaney.org`), no a uno heredado, y conviene
    verificar con un rebote real que el evento llega y pasa el filtro de
    remitente propio.
+8. **La aplicación nativa no reporta bloqueos.** El aviso de petición bloqueada
+   sale de la web (`src/lib/blocked-request.ts`). La aplicación Flutter recibe
+   el 403 de Cloudflare como cualquier otro rechazo y no lo distingue; el
+   cambio equivalente va en su propio repositorio.
 
 ---
 

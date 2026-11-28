@@ -33,6 +33,7 @@ from app.models import intake  # noqa: F401
 from app.models import messaging  # noqa: F401
 from app.models import pallet  # noqa: F401
 from app.models import product_alias  # noqa: F401
+from app.models import product_alias_rejection  # noqa: F401
 from app.models import product_gtin  # noqa: F401
 from app.models import product_mapping_choice  # noqa: F401
 from app.models import product_type  # noqa: F401

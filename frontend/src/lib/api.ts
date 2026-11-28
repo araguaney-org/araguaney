@@ -1,3 +1,5 @@
+import { apiReachable, classifyResponse, reportBlockedRequest } from "@/lib/blocked-request"
+
 // Server-side fetches bypass Cloudflare and call Railway directly (avoids Bot Fight Mode blocking Vercel).
 // Browser fetches go through NEXT_PUBLIC_API_URL (Cloudflare proxied).
 const API_URL =
@@ -29,21 +31,46 @@ export class ApiError extends Error {
   }
 }
 
+/** Mensaje para un 403 que respondió Cloudflare y no la API. Lo ve quien
+ * captura, y en la cola offline queda como motivo en pendientes. */
+const EDGE_BLOCKED_MESSAGE =
+  "El firewall de la API bloqueó esta petición. Avisa a la coordinación nacional."
+
 export async function apiFetch<T>(
   path: string,
   options: FetchOptions = {}
 ): Promise<T> {
   const { token, ...rest } = options;
-  const res = await fetch(`${API_URL}${path}`, {
-    ...rest,
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...rest.headers,
-    },
-  });
+  const method = (rest.method ?? "GET").toUpperCase()
+  let res: Response
+  try {
+    res = await fetch(`${API_URL}${path}`, {
+      ...rest,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...rest.headers,
+      },
+    });
+  } catch (err: unknown) {
+    // En el navegador, un bloqueo del WAF llega sin CORS y se ve como falta de
+    // conexión. Se pregunta a la API si está alcanzable solo para avisar; el
+    // error sigue su camino igual, y la cola offline lo trata como siempre.
+    if (typeof window !== "undefined") {
+      void apiReachable(API_URL).then((reachable) => {
+        if (reachable) reportBlockedRequest({ layer: "edge-suspected", status: null, method, path })
+      })
+    }
+    throw err
+  }
 
   if (!res.ok) {
+    const layer = classifyResponse(res)
+    if (layer) reportBlockedRequest({ layer, status: res.status, method, path })
+    if (layer === "edge") {
+      throw new ApiError(EDGE_BLOCKED_MESSAGE, { status: res.status, code: "EDGE_BLOCKED" })
+    }
+
     const body = await res.json().catch(() => ({}));
     const detail = body.detail;
     let message = "Request failed";

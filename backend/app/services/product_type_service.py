@@ -10,6 +10,20 @@ from app.services.base import BaseService
 from app.utils.errors import api_error
 
 
+def catalog_already_finds(
+    producto: ProductType, palabras: list[str], extra: list[str] | None = None
+) -> bool:
+    """Si el catálogo ya encuentra este producto con estas palabras, sin alias.
+
+    Es la regla que vigila a los alias sembrados (task 5), a los que se agregan
+    a mano y a los aprendidos: un alias que no cambia lo que se encuentra solo
+    hace creer que la lista cubre más de lo que cubre. `extra` suma nombres que
+    el producto ya tiene por otra vía, como sus alias existentes.
+    """
+    nombres = [w for w in (producto.display_name, producto.inn_name, producto.brand) if w]
+    propias = set(words(" ".join(nombres + (extra or []))))
+    return all(shares_stem(palabra, propias) for palabra in palabras)
+
 class ProductTypeService(BaseService):
 
     def get_all(self, category: str | None = None) -> list[ProductType]:
@@ -79,10 +93,7 @@ class ProductTypeService(BaseService):
                 field="alias",
             )
 
-        propias = set(words(" ".join(
-            w for w in (producto.display_name, producto.inn_name, producto.brand) if w
-        )))
-        if all(shares_stem(palabra, propias) for palabra in palabras):
+        if catalog_already_finds(producto, palabras):
             raise api_error(
                 "ALIAS_ALREADY_FOUND",
                 f"«{limpio}» ya encuentra este producto sin necesidad del alias. "
@@ -117,6 +128,9 @@ class ProductTypeService(BaseService):
         if not fila or fila.product_type_id != pt_id:
             raise api_error("ALIAS_NOT_FOUND", "Alias not found", status_code=404)
 
+        # Quitarlo no basta si las elecciones que lo graduaron siguen ahí: la
+        # siguiente captura con ese texto lo volvería a aprender.
+        repo.reject_alias(pt_id, fila.normalized, user_id)
         AuditRepository(self.db).log(
             "PRODUCT_ALIAS_REMOVED",
             "product_type",
