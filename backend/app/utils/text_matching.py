@@ -81,3 +81,44 @@ def shares_stem(word: str, catalog_words: set[str]) -> bool:
         if len(larga) - len(corta) <= MAX_STEM_DELTA and corta in larga:
             return True
     return False
+
+
+# Un renglón de donación que pasa de unas pocas palabras ya no es un nombre de
+# producto sino una frase ("traigo cobijas y unas latas para los niños"), y
+# graduarla a alias haría que cualquier búsqueda con esas palabras sueltas
+# arrastrara al producto.
+MAX_ALIAS_WORDS = 4
+
+# Cómo viene empacado o cuánto es, no cómo se llama: "2 cajas de Bonafont" y
+# "Bonafont 1 litro" piden lo mismo. Sin quitarlas, cada forma de contar sería
+# un nombre distinto y las confirmaciones nunca se juntarían. Las de una o dos
+# letras ("ml", "kg") ya las descarta `words`.
+PACKAGING_WORDS = {
+    "caja", "cajas", "paquete", "paquetes", "bolsa", "bolsas", "botella",
+    "botellas", "frasco", "frascos", "lata", "latas", "sobre", "sobres",
+    "pieza", "piezas", "pza", "pzas", "unidad", "unidades", "litro", "litros",
+    "lts", "kilo", "kilos", "gramo", "gramos", "kgs", "grs",
+}
+
+
+def alias_candidate(free_text: str) -> str | None:
+    """El nombre de producto que hay dentro de un renglón libre, o nada.
+
+    Quien dona escribe "10 frazadas" o "advil 400mg"; el nombre es lo que queda
+    al quitar cantidades y presentaciones. Se quita todo token con un dígito, no
+    solo los números sueltos: "400mg" dice una concentración, no cómo se llama
+    el producto, y una marca no identifica presentación ("advil" vale para
+    400 y para 800).
+
+    Devuelve las palabras ya normalizadas, en el orden en que se escribieron,
+    para que dos personas que teclean "Frazadas" y "frazadas" cuenten como la
+    misma confirmación.
+    """
+    sin_cantidades = [p for p in words(free_text) if not any(c.isdigit() for c in p)]
+    # El largo se mide antes de quitar el empaque: una frase sigue siendo frase
+    # aunque mencione botellas, y recortarla hasta que quepa la haría pasar
+    # por nombre.
+    if len(sin_cantidades) > MAX_ALIAS_WORDS:
+        return None
+    palabras = [p for p in sin_cantidades if p not in PACKAGING_WORDS]
+    return " ".join(palabras) or None
